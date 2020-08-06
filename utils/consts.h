@@ -12,8 +12,10 @@ enum class Direction : uint8_t {
 
 };
 
+
 enum class XPosition : uint8_t {
 
+    LH_Attack_OutofCage,
     LH_Attack,
     LH_Position4,
     LH_Position3,
@@ -25,6 +27,7 @@ enum class XPosition : uint8_t {
     RH_Position3,
     RH_Position4,
     RH_Attack,
+    RH_Attack_OutofCage,
 
 };
 
@@ -87,7 +90,7 @@ namespace Constants {
     constexpr YPosition Player1_YPos = YPosition::Level_1;
   
     constexpr uint8_t Player2_Index = 2;
-    constexpr uint8_t Player2_XPos = 90;
+    constexpr uint8_t Player2_XPos = 100;
     constexpr YPosition Player2_YPos = YPosition::Level_1;
 
     constexpr uint8_t Level_1 = 0;

@@ -1,6 +1,8 @@
+#pragma once
+
 #include <Arduboy2.h>
-#include "../images/images.h"
-#include "../utils/consts.h"
+#include "../images/Images.h"
+#include "../utils/Consts.h"
 
 struct Player {
 

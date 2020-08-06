@@ -1,12 +1,14 @@
+#pragma once
+
 #include <Arduboy2.h>
-#include "../images/images.h"
-#include "../utils/consts.h"
+#include "../images/Images.h"
+#include "../utils/Consts.h"
 
 struct Lion {
 
-    const uint8_t xPositions[11] =      { 28, 33, 38, 43, 48,   53,   58, 63, 68, 73, 78 };
-    const uint8_t leftImages[11] =      { 2,  0,  1,  0,  1,    0,    1,  0,  1,  0,  1 };
-    const uint8_t rightImages[11] =     { 3,  4,  3,  4,  3,    4,    3,  4,  3,  4,  5 };
+    const uint8_t xPositions[13] =      { 20, 28, 33, 38, 43, 48,   53,   58, 63, 68, 73, 78, 86 };
+    const uint8_t leftImages[13] =      { 2,  2,  0,  1,  0,  1,    0,    1,  0,  1,  0,  1,  0 };
+    const uint8_t rightImages[13] =     { 4,  3,  4,  3,  4,  3,    4,    3,  4,  3,  4,  5,  5 };
 
     private:
 

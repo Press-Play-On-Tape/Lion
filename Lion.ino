@@ -1,8 +1,10 @@
 #include <Arduboy2.h>
-#include "images/images.h"
-#include "utils/consts.h"
-#include "entities/player.h"
-#include "entities/lion.h"
+#include "images/Images.h"
+#include "utils/Consts.h"
+#include "entities/Player.h"
+#include "entities/Lion.h"
+#include "entities/Explosions.h"
+#include "entities/Explosion.h"
 
 Arduboy2 arduboy;
 
@@ -10,6 +12,8 @@ Player player1;
 Player player2;
 Lion lion1;
 Lion lion2;
+Explosions explosions;
+bool explosionSet = false;
 
 void setup(void) {
 
@@ -38,7 +42,7 @@ void loop(void) {
 
     // Handle player movements ..
 
-    if (arduboy.everyXFrames(8)) {
+    if (arduboy.everyXFrames(4)) {
 
         if (arduboy.pressed(A_BUTTON))              { player2.decYPosition(); }
         if (arduboy.pressed(B_BUTTON))              { player2.incYPosition(); }
@@ -51,14 +55,43 @@ void loop(void) {
     if (arduboy.everyXFrames(lion1.getSpeed()))     moveLion(lion1, lion2);
     if (arduboy.everyXFrames(lion2.getSpeed()))     moveLion(lion2, lion1);
 
+    explosions.update(arduboy.everyXFrames(2));
+
     drawCage();
 
     
     Sprites::drawExternalMask(lion1.getXDisplay(), lion1.getYDisplay(), Images::Lion, Images::Lion_Mask, lion1.getFrame(), lion1.getFrame());
     Sprites::drawExternalMask(lion2.getXDisplay(), lion2.getYDisplay(), Images::Lion, Images::Lion_Mask, lion2.getFrame(), lion2.getFrame());
 
-    Sprites::drawSelfMasked(player1.getXDisplay(), player1.getYDisplay(), Images::Player_01, 0);
-    Sprites::drawSelfMasked(player2.getXDisplay(), player2.getYDisplay(), Images::Player_02, 0);
+    uint8_t player01Frame = (
+        arduboy.frameCount % 8 < 4 && 
+        (
+            (player1.getYPosition() == lion1.getYPosition() && lion1.getXPosition() <= XPosition::LH_Attack) || 
+            (player1.getYPosition() == lion2.getYPosition() && lion2.getXPosition() <= XPosition::LH_Attack)
+        )         
+        ? 1 : 0);
+
+    uint8_t player02Frame = (
+        arduboy.frameCount % 8 < 4 && 
+        (
+            (player1.getYPosition() == lion1.getYPosition() && lion1.getXPosition() >= XPosition::RH_Attack) || 
+            (player1.getYPosition() == lion2.getYPosition() && lion2.getXPosition() >= XPosition::RH_Attack)
+        )         
+        ? 1 : 0);
+
+    Sprites::drawExternalMask(player1.getXDisplay(), player1.getYDisplay(), Images::Player_01, Images::Player_01_Mask, player01Frame, player01Frame);
+    Sprites::drawExternalMask(player2.getXDisplay(), player2.getYDisplay(), Images::Player_02, Images::Player_02_Mask, player02Frame, player02Frame);
+
+
+    for (uint8_t i= 0; i < 60; i++) {
+
+        Explosion explosion = explosions.getExplosion(i);
+        
+        if (explosion.render()) {
+            Sprites::drawExternalMask(explosion.getX(), explosion.getY(), Images::Pixel, Images::Pixel_Mask, 0, 0);
+        }
+
+    }
 
 
     arduboy.display();
@@ -67,10 +100,6 @@ void loop(void) {
 
 
 void moveLion(Lion &thisLion, Lion &otherLion) {
-// Serial.print("Dir ");
-// Serial.print((uint8_t)thisLion.getDirection());
-// Serial.print(", Pos ");
-// Serial.println((uint8_t)thisLion.getXPosition());
 
     // Handle lion moves ..
 
@@ -91,8 +120,8 @@ void moveLion(Lion &thisLion, Lion &otherLion) {
                         uint8_t thisLionX = static_cast<uint8_t>(thisLion.getXPosition());
                         uint8_t otherLionX = static_cast<uint8_t>(otherLion.getXPosition());
 
-                        if (rnd && (thisLionX - otherLionX > 3 && otherLion.getDirection() == Direction::Right) ||
-                                   (thisLionX - otherLionX > 5 && otherLion.getDirection() == Direction::Left)) {
+                        if (rnd && ((thisLionX - otherLionX > 3 && otherLion.getDirection() == Direction::Right) ||
+                                    (thisLionX - otherLionX > 5 && otherLion.getDirection() == Direction::Left))) {
 Serial.println("L1");
                             changeLevel(thisLion, otherLion, Direction::Right);
 
@@ -149,12 +178,41 @@ Serial.println("L5");
                     break;
 
                 case XPosition::LH_Attack: 
-                    // if (player1.getY() == thisLion.getY()) {
-// Serial.println("L8");
 
+                    if (player1.getYPosition() == thisLion.getYPosition() && random(0, 2) == 0) {
+
+                        thisLion.incXPosition();
                         thisLion.setDirection(Direction::Right);
 
-                    // }
+                    }
+                    else {
+
+                        thisLion.decXPosition();
+
+                    }
+
+                    break;
+
+                case XPosition::LH_Attack_OutofCage: 
+
+                    if (player1.getYPosition() == thisLion.getYPosition()) {
+
+                        thisLion.incXPosition();
+                        thisLion.setDirection(Direction::Right);
+
+                    }
+                    else {
+
+                        if (!explosionSet) {
+
+                            explosions.setExplosions(10, 50);
+                            explosionSet = true;
+
+                        }
+//                        player1.setEnabled(false);
+//                        thisLion.decXPosition(); // attck the player.
+
+                    }
 
                     break;
 
@@ -179,8 +237,8 @@ Serial.println("L5");
                         uint8_t otherLionX = static_cast<uint8_t>(otherLion.getXPosition());
 
 //                        if (otherLion.getXPosition() <= XPosition::Centre && !otherLion.isMovingUpDown() && rnd) {
-                        if (rnd && (otherLionX - thisLionX > 3 && otherLion.getDirection() == Direction::Left) ||
-                                   (otherLionX - thisLionX > 5 && otherLion.getDirection() == Direction::Right)) {
+                        if (rnd && ((otherLionX - thisLionX > 3 && otherLion.getDirection() == Direction::Left) ||
+                                    (otherLionX - thisLionX > 5 && otherLion.getDirection() == Direction::Right))) {
 
 Serial.println("R1");
 
@@ -257,6 +315,8 @@ Serial.println("R5");
             }
 
             break;
+
+        default: break;
 
     }
 
@@ -361,5 +421,9 @@ void changeOneLevel(Lion &thisLion, Lion &otherLion, Direction newDirection) {
         thisLion.setNextDirection(newDirection);
 
     }
+
+}
+
+void explosion() {
 
 }

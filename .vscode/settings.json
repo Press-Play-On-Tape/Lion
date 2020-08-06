@@ -4,6 +4,12 @@
         "algorithm": "cpp",
         "bitset": "cpp",
         "memory": "cpp",
-        "optional": "cpp"
+        "optional": "cpp",
+        "__functional_base": "cpp",
+        "array": "cpp",
+        "istream": "cpp",
+        "locale": "cpp",
+        "tuple": "cpp",
+        "utility": "cpp"
     }
 }
