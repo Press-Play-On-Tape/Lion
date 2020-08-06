@@ -140,28 +140,31 @@ void moveLion(Lion &thisLion, Lion &otherLion) {
 
                     if (!explosionSet) {
 
-                        uint8_t y = 0;
+                        int16_t y = 0;
 
                         switch (thisLion.getXPosition()) {
 
                             case XPosition::LH_Attacking_Up:
-                                y = player1.getXDisplay() + 8;
+Serial.println("Attacking Up");                            
+                                y = player1.getYDisplay() + 7;
                                 break;
 
                             case XPosition::LH_Attacking_Down:
-                                y = player1.getXDisplay() - 8;
+Serial.println("Attacking Down");                            
+                                y = player1.getYDisplay() + 11;
                                 break;
 
                             case XPosition::LH_Attacking_Left:
-                                y = player1.getXDisplay();
+Serial.println("Attacking Left");                            
+                                y = player1.getYDisplay() + 9;
                                 break;
 
                             default:    break;
 
                         }
-                        Serial.println(y);
-                        thisLion.setXPosition(XPosition::LH_Attacking_Left);
-                        explosions.setExplosions(7, y);
+Serial.println(y);
+//                        thisLion.setXPosition(XPosition::LH_Attacking_Left);
+                        explosions.setExplosions(12, y);
                         explosionSet = true;
 
                     }

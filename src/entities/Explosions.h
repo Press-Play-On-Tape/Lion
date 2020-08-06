@@ -27,7 +27,7 @@ struct Explosions {
 
     public:
 
-        void setExplosions(uint8_t x, uint8_t y) {
+        void setExplosions(int16_t x, int16_t y) {
 
             this->counter = 17;
             this->x = x;
@@ -35,9 +35,10 @@ struct Explosions {
 
             for (uint8_t i = 0; i < 60; i++) {
 
-                this->explosion[i].setX(x + ((i / 10) - 3));
-                this->explosion[i].setY(y + ((i / 10) - 3));
-                this->explosion[i].setCounter(-random(30, 60));
+                this->explosion[i].setX(x + ((i % 6) - 3));
+                this->explosion[i].setY(y + ((i % 6) - 3));
+//                this->explosion[i].setCounter(-random(12, 48));
+                this->explosion[i].setCounter(-random(0, 32));
                 this->explosion[i].setDirection(random(0, 16));
                 
             }

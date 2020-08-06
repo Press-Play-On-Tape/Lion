@@ -50,11 +50,11 @@ void playGame(void) {
         ? 1 : 0);
 
 
-    if (lionAttacking == Direction::Left && explosions.getCounter() > 0 || lionAttacking != Direction::Left) {
+    if ((lionAttacking == Direction::Left && explosions.getCounter() > 0) || lionAttacking != Direction::Left) {
         Sprites::drawExternalMask(player1.getXDisplay(), player1.getYDisplay(), Images::Player_01, Images::Player_01_Mask, player01Frame, player01Frame);
     }
 
-    if (lionAttacking == Direction::Right && explosions.getCounter() > 0 || lionAttacking != Direction::Right) {
+    if ((lionAttacking == Direction::Right && explosions.getCounter() > 0) || lionAttacking != Direction::Right) {
         Sprites::drawExternalMask(player2.getXDisplay(), player2.getYDisplay(), Images::Player_02, Images::Player_02_Mask, player02Frame, player02Frame);
     }
 
@@ -73,22 +73,22 @@ void playGame(void) {
 
         case 15 ... 16:
         case 11 ... 12:
-            Sprites::drawExternalMask(explosions.getX(), explosions.getY(), Images::Scrap, Images::Scrap_Mask, 0, 0);
+            Sprites::drawExternalMask(explosions.getX() - 8, explosions.getY() - 8, Images::Scrap, Images::Scrap_Mask, 0, 0);
             break;
 
         case 13 ... 14:
         case 9 ... 10:
-            Sprites::drawExternalMask(explosions.getX(), explosions.getY(), Images::Scrap, Images::Scrap_Mask, 1, 1);
+            Sprites::drawExternalMask(explosions.getX() - 8, explosions.getY() - 8, Images::Scrap, Images::Scrap_Mask, 1, 1);
             break;
 
         case 7 ... 8:
         case 3 ... 4:
-            Sprites::drawExternalMask(explosions.getX(), explosions.getY(), Images::Scrap, Images::Scrap_Mask, 2, 2);
+            Sprites::drawExternalMask(explosions.getX() - 8, explosions.getY() - 8, Images::Scrap, Images::Scrap_Mask, 2, 2);
             break;
 
         case 5 ... 6:
         case 1 ... 2:
-            Sprites::drawExternalMask(explosions.getX(), explosions.getY(), Images::Scrap, Images::Scrap_Mask, 3, 3);
+            Sprites::drawExternalMask(explosions.getX() - 8, explosions.getY() - 8, Images::Scrap, Images::Scrap_Mask, 3, 3);
             break;
 
     }
