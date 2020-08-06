@@ -36,6 +36,7 @@ struct Player {
 
         void reset(uint8_t index,  uint8_t x, YPosition y) {
 
+            this->score = 0;
             this->index = index;
             this->x = x;
             this->y = y;

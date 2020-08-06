@@ -173,4 +173,15 @@ struct Lion {
 
         }
 
+        void reset(Direction direction, YPosition yPosition, uint8_t speed, uint8_t index) {
+
+            this->setXPosition(XPosition::Centre);
+            this->setSteps(0);
+            this->setDirection(direction);
+            this->setYPosition(yPosition);
+            this->setIndex(index);   
+            this->setSpeed(speed);
+
+        }
+
 };

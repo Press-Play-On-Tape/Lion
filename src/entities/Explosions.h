@@ -37,7 +37,6 @@ struct Explosions {
 
                 this->explosion[i].setX(x + ((i % 6) - 3));
                 this->explosion[i].setY(y + ((i % 6) - 3));
-//                this->explosion[i].setCounter(-random(12, 48));
                 this->explosion[i].setCounter(-random(0, 32));
                 this->explosion[i].setDirection(random(0, 16));
                 
@@ -45,15 +44,23 @@ struct Explosions {
 
         }
 
-        void update(bool altFrame) {
+        bool update(bool altFrame) {
+
+            bool finished = true;
 
             for (uint8_t i = 0; i < 60; i++) {
 
-                this->explosion[i].update(altFrame);
+                if (!this->explosion[i].update(altFrame)) {
+
+                    finished = false;
+
+                }
                 
             }
 
             if (this->counter > 0) this->counter--;
+
+            return finished;
 
         }
 
@@ -63,6 +70,16 @@ struct Explosions {
 
         }
 
+        void reset() {
 
+            this->counter = 0;
+            
+            for (uint8_t i = 0; i < 60; i++) {
+
+                this->explosion[i].setCounter(-127);
+                
+            }
+
+        }
 
 };

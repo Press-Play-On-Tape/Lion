@@ -10,7 +10,7 @@ struct Explosion {
 
         int16_t x = 0;
         int16_t y = 0;
-        int8_t counter = 0;
+        int8_t counter = -127;
         uint8_t direction = 0;
 
     public:
@@ -27,15 +27,15 @@ struct Explosion {
 
     public:
 
-        void update(bool altFrame) {
+        bool update(bool altFrame) {
 
             switch (this->counter) {
 
-                case -127 ... -1:    
+                case -126 ... -1:    
                     this->counter++;
                     break;
 
-                case 0 ... 60:
+                case 0 ... 120:
                     this->counter++;
 
                     switch (this->direction) {
@@ -121,6 +121,8 @@ struct Explosion {
                     break;
 
             }
+Serial.println(this->counter);
+            return this->counter == 121;
 
         }
 

@@ -5,7 +5,9 @@
 
 enum class GameState : uint8_t {
 
+    Title_Init,
     Title,
+    PlayGame_Init,
     PlayGame
 
 };

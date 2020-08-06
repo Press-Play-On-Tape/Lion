@@ -19,7 +19,9 @@ Explosions explosions;
 bool explosionSet = false;
 Direction lionAttacking = Direction::None;
 uint8_t lionAttackingIndex = 0;
-GameState gameState = GameState::Title;
+GameState gameState = GameState::Title_Init;
+uint8_t frameRate = 50;
+int16_t counter = 10;
 
 void setup(void) {
 
@@ -28,20 +30,8 @@ void setup(void) {
 	arduboy.systemButtons();
 	arduboy.audio.begin();
 	arduboy.initRandomSeed();
-	arduboy.setFrameRate(70);
-
+	arduboy.setFrameRate(50);
     font3x5.setTextColor(0);
-
-    player1.reset(Constants::Player1_Index, Constants::Player1_XPos, Constants::Player1_YPos); 
-    player2.reset(Constants::Player2_Index, Constants::Player2_XPos, Constants::Player2_YPos); 
-
-    lion1.setDirection(Direction::Left);
-    lion1.setYPosition(YPosition::Level_1);
-    lion1.setIndex(Constants::Lion1_Index);
-
-    lion2.setDirection(Direction::Right);
-    lion2.setYPosition(YPosition::Level_2);
-    lion2.setIndex(Constants::Lion2_Index);
 	
 }
 
@@ -54,12 +44,30 @@ void loop(void) {
 
     switch (gameState) {
 
+        case GameState::Title_Init:
+
+            gameState = GameState::Title;
+            counter = -64;
+            [[fallthrough]]
+
         case GameState::Title:
+
             title();
             break;
 
+        case GameState::PlayGame_Init:
+
+            playGame_Init();
+            [[fallthrough]]
+
         case GameState::PlayGame:
+
             playGame();
+
+            if (frameRate != 50 + (player1.getScore() / 8)) {
+                frameRate = 50 + (player1.getScore() / 8);
+                arduboy.setFrameRate(frameRate);
+            }
             break;
 
     }
