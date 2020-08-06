@@ -1,4 +1,4 @@
-
+#include <Arduboy2.h>
 
 void drawCage() {
 
@@ -25,10 +25,6 @@ void drawCage() {
 
 }
 
-
-/* ----------------------------------------------------------------------------
- *  Draw a vertical dotted line. 
- */
 void drawVerticalDottedLine(uint8_t x, uint8_t y1, uint8_t y2, uint8_t colour) {
 
 	uint8_t diff = (y2 - y1);
@@ -38,5 +34,15 @@ void drawVerticalDottedLine(uint8_t x, uint8_t y1, uint8_t y2, uint8_t colour) {
 		arduboy.drawPixel(x, y1 + y, colour);
 
     }
+
+}
+
+void renderScoreBoard(Player &player) {
+
+    Sprites::drawOverwrite(player.getIndex() == Constants::Player1_Index ? 0 : 115, 57, Images::Scoreboard, 0);
+    font3x5.setCursor(player.getIndex() == Constants::Player1_Index ? 1 : 116, 57);
+    if (player.getScore() < 100) font3x5.print(F("0"));
+    if (player.getScore() < 10)  font3x5.print(F("0"));
+    font3x5.print(player.getScore());
 
 }

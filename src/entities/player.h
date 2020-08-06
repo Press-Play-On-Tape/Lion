@@ -18,6 +18,7 @@ struct Player {
         uint8_t getX()                              { return this->x; }
         YPosition getYPosition()                    { return this->y; }
         uint16_t getScore()                         { return this->score; }
+        uint8_t getIndex()                          { return this->index; }
 
         void setX(uint8_t val)                      { this->x = val; }
         void setY(YPosition val)                    { this->y = val; }
