@@ -42,7 +42,12 @@ void renderScoreBoard(Player &player) {
 
 }
 
-void renderExplosion() {
+bool renderExplosion() {
+
+    const uint8_t frame[] = { 0, 3, 3, 2, 2, 3, 3, 2, 2, 1, 1, 0, 0, 1, 1, 0, 0 };
+
+    bool anythingRendered = false;
+    uint8_t counter = explosions.getCounter();
 
     for (uint8_t i= 0; i < 60; i++) {
 
@@ -50,32 +55,18 @@ void renderExplosion() {
         
         if (explosion.render()) {
             Sprites::drawExternalMask(explosion.getX(), explosion.getY(), Images::Pixel, Images::Pixel_Mask, 0, 0);
+            anythingRendered = true;
         }
 
     }
 
-    switch (explosions.getCounter()) {
+    if (counter > 0 && counter <= 16)  {
 
-        case 15 ... 16:
-        case 11 ... 12:
-            Sprites::drawExternalMask(explosions.getX() - 8, explosions.getY() - 8, Images::Scrap, Images::Scrap_Mask, 0, 0);
-            break;
-
-        case 13 ... 14:
-        case 9 ... 10:
-            Sprites::drawExternalMask(explosions.getX() - 8, explosions.getY() - 8, Images::Scrap, Images::Scrap_Mask, 1, 1);
-            break;
-
-        case 7 ... 8:
-        case 3 ... 4:
-            Sprites::drawExternalMask(explosions.getX() - 8, explosions.getY() - 8, Images::Scrap, Images::Scrap_Mask, 2, 2);
-            break;
-
-        case 5 ... 6:
-        case 1 ... 2:
-            Sprites::drawExternalMask(explosions.getX() - 8, explosions.getY() - 8, Images::Scrap, Images::Scrap_Mask, 3, 3);
-            break;
+        Sprites::drawExternalMask(explosions.getX() - 8, explosions.getY() - 8, Images::Scrap, Images::Scrap_Mask, frame[counter], frame[counter]);
+        anythingRendered = true;
 
     }
+
+    return anythingRendered;
 
 }

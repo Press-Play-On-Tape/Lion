@@ -99,9 +99,14 @@ void playGame(void) {
         Sprites::drawExternalMask(player2.getXDisplay(), player2.getYDisplay(), Images::Player_02, Images::Player_02_Mask, player02Frame, player02Frame);
     }
 
-    renderExplosion();
-    renderScoreBoard(player1);
-    renderScoreBoard(player2);
+    bool explosionRendered = renderExplosion();
+
+    if (!explosionRendered) {
+
+        renderScoreBoard(player1);
+        renderScoreBoard(player2);
+        
+    }
 
 
     // Is the game over ?
