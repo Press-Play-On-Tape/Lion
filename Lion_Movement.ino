@@ -23,18 +23,16 @@ void moveLion(Lion &thisLion, Lion &otherLion) {
 
                         if (rnd && ((thisLionX - otherLionX > 3 && otherLion.getDirection() == Direction::Right) ||
                                     (thisLionX - otherLionX > 5 && otherLion.getDirection() == Direction::Left))) {
-// Serial.println("L1");
+
                             changeLevel(thisLion, otherLion, Direction::Right);
 
                         }
                         else if (otherLion.getYPosition() != YPosition::Level_2 && !otherLion.isMovingUpDown() && rnd) {
-// Serial.println("L2");
 
                             changeOneLevel(thisLion, otherLion, Direction::Right);
 
                         }
                         else {
-// Serial.println("L3");
 
                             thisLion.decXPosition();
 
@@ -50,21 +48,17 @@ void moveLion(Lion &thisLion, Lion &otherLion) {
                         bool rnd = (random(0, 3) == 0);
 
                         if (otherLion.getXPosition() >= XPosition::Centre && !otherLion.isMovingUpDown() && rnd) {
-// Serial.println("L4");
 
                             changeLevel(thisLion, otherLion, Direction::Right);
 
                         }
                         else if (otherLion.getYPosition() != YPosition::Level_2 && !otherLion.isMovingUpDown() && rnd) {
-// Serial.println("L5");
 
                             changeOneLevel(thisLion, otherLion, Direction::Right);
 
                         }
                         else {
-// Serial.println("L6");
 
-                            //thisLion.setDirection(Direction::Right);
                             thisLion.decXPosition();
                             player1.incScore();
 
@@ -72,7 +66,6 @@ void moveLion(Lion &thisLion, Lion &otherLion) {
 
                     }
                     else {
-// Serial.println("L7");
 
                         thisLion.decXPosition();
 
@@ -145,25 +138,21 @@ void moveLion(Lion &thisLion, Lion &otherLion) {
                         switch (thisLion.getXPosition()) {
 
                             case XPosition::LH_Attacking_Up:
-Serial.println("Attacking Up");                            
                                 y = player1.getYDisplay() + 7;
                                 break;
 
                             case XPosition::LH_Attacking_Down:
-Serial.println("Attacking Down");                            
                                 y = player1.getYDisplay() + 11;
                                 break;
 
                             case XPosition::LH_Attacking_Left:
-Serial.println("Attacking Left");                            
                                 y = player1.getYDisplay() + 9;
                                 break;
 
                             default:    break;
 
                         }
-Serial.println(y);
-//                        thisLion.setXPosition(XPosition::LH_Attacking_Left);
+
                         explosions.setExplosions(12, y);
                         explosionSet = true;
 
@@ -172,7 +161,6 @@ Serial.println(y);
                     break;
 
                 default:
-// Serial.println("L9");
 
                     thisLion.decXPosition();
                     break;
@@ -191,23 +179,18 @@ Serial.println(y);
                         uint8_t thisLionX = static_cast<uint8_t>(thisLion.getXPosition());
                         uint8_t otherLionX = static_cast<uint8_t>(otherLion.getXPosition());
 
-//                        if (otherLion.getXPosition() <= XPosition::Centre && !otherLion.isMovingUpDown() && rnd) {
                         if (rnd && ((otherLionX - thisLionX > 3 && otherLion.getDirection() == Direction::Left) ||
                                     (otherLionX - thisLionX > 5 && otherLion.getDirection() == Direction::Right))) {
-
-// Serial.println("R1");
 
                             changeLevel(thisLion, otherLion, Direction::Left);
 
                         }
                         else if (otherLion.getYPosition() != YPosition::Level_2 && !otherLion.isMovingUpDown() && rnd) {
-// Serial.println("R2");
 
                             changeOneLevel(thisLion, otherLion, Direction::Left);
 
                         }
                         else {
-// Serial.println("R3");
 
                             thisLion.incXPosition();
 
@@ -224,26 +207,22 @@ Serial.println(y);
 
                         if (otherLion.getXPosition() <= XPosition::Centre && !otherLion.isMovingUpDown() && rnd) {
 
-// Serial.println("R4");
                             changeLevel(thisLion, otherLion, Direction::Left);
 
                         }
                         else if (otherLion.getYPosition() != YPosition::Level_2 && !otherLion.isMovingUpDown() && rnd) {
 
-// Serial.println("R5");
                             changeOneLevel(thisLion, otherLion, Direction::Left);
 
                         }
                         else {
 
-// Serial.println("R6");
                             thisLion.setDirection(Direction::Left);
 
                         }
 
                     }
                     else {
-// Serial.println("R7");
 
                         thisLion.incXPosition();
 
@@ -252,17 +231,11 @@ Serial.println(y);
                     break;
 
                 case XPosition::RH_Attack: 
-                    // if (player1.getY() == thisLion.getY()) {
-// Serial.println("R8");
 
-                        thisLion.setDirection(Direction::Left);
-
-                    // }
-
+                    thisLion.setDirection(Direction::Left);
                     break;
 
                 default:
-// Serial.println("R9");
 
                     thisLion.incXPosition();
                     break;
@@ -287,17 +260,14 @@ void changeLevel(Lion &thisLion, Lion &otherLion, Direction newDirection) {
 
                 case YPosition::Level_1:
                 case YPosition::Level_3:
-// Serial.println("X1");
 
-//                    thisLion.setYPosition(YPosition::Level_2);
                     thisLion.setSteps(3);
                     thisLion.setDirection(Direction::Down);
                     thisLion.setNextDirection(newDirection);
                     break;
 
                 case YPosition::Level_2:
-// Serial.println("X2");
-//                    thisLion.setYPosition(YPosition::Level_2);
+
                     thisLion.setSteps(6);
                     thisLion.setDirection(Direction::Down);
                     thisLion.setNextDirection(newDirection);
@@ -313,15 +283,14 @@ void changeLevel(Lion &thisLion, Lion &otherLion, Direction newDirection) {
 
                 case YPosition::Level_1:
                 case YPosition::Level_2:
-// Serial.println("X3");
-//                    thisLion.setYPosition(YPosition::Level_3);
+
                     thisLion.setSteps(3);
                     thisLion.setDirection(Direction::Down);
                     thisLion.setNextDirection(newDirection);
                     break;
 
                 case YPosition::Level_3:
-// Serial.println("X4");
+
                     thisLion.setSteps(3);
                     thisLion.setDirection(Direction::Up);
                     thisLion.setNextDirection(newDirection);
@@ -337,14 +306,14 @@ void changeLevel(Lion &thisLion, Lion &otherLion, Direction newDirection) {
 
                 case YPosition::Level_1:
                 case YPosition::Level_3:
-// Serial.println("X5");
+
                     thisLion.setSteps(3);
                     thisLion.setDirection(Direction::Up);
                     thisLion.setNextDirection(newDirection);
                     break;
 
                 case YPosition::Level_2:
-// Serial.println("X6");
+
                     thisLion.setSteps(6);
                     thisLion.setDirection(Direction::Up);
                     thisLion.setNextDirection(newDirection);
@@ -361,7 +330,6 @@ void changeLevel(Lion &thisLion, Lion &otherLion, Direction newDirection) {
 void changeOneLevel(Lion &thisLion, Lion &otherLion, Direction newDirection) {
 
     if (thisLion.getYPosition() == YPosition::Level_2) {
-// Serial.println("Y1");
 
         thisLion.setSteps(3);
         thisLion.setDirection(otherLion.getYPosition() == YPosition::Level_1 ? Direction::Down : Direction::Up);
@@ -369,7 +337,6 @@ void changeOneLevel(Lion &thisLion, Lion &otherLion, Direction newDirection) {
 
     }
     else {
-// Serial.println("Y2");
 
         thisLion.setSteps(3);
         thisLion.setDirection(thisLion.getYPosition() == YPosition::Level_1 ? Direction::Down : Direction::Up);

@@ -121,7 +121,7 @@ struct Explosion {
                     break;
 
             }
-Serial.println(this->counter);
+
             return this->counter == 121;
 
         }

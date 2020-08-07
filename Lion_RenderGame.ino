@@ -6,7 +6,7 @@ void renderBackground() {
 
 }
 
-void renderCage() {
+void renderCage(GameMode gameMode) {
 
     arduboy.drawFastHLine(36, 0, 55);
     arduboy.drawFastHLine(36, 21, 55);
@@ -18,10 +18,19 @@ void renderCage() {
     arduboy.drawFastVLine(36, 40, 5);
     arduboy.drawFastVLine(36, 61, 3);
 
-    arduboy.drawFastVLine(90, 0, 3);
-    arduboy.drawFastVLine(90, 19, 5);
-    arduboy.drawFastVLine(90, 40, 5);
-    arduboy.drawFastVLine(90, 61, 3);
+    if (gameMode == GameMode::TwoPlayer) {
+
+        arduboy.drawFastVLine(90, 0, 3);
+        arduboy.drawFastVLine(90, 19, 5);
+        arduboy.drawFastVLine(90, 40, 5);
+        arduboy.drawFastVLine(90, 61, 3);
+
+    }
+    else {
+
+        arduboy.drawFastVLine(90, 0, 64);
+
+    }
 
     drawVerticalDottedLine(45, 0, 64, 1);
     drawVerticalDottedLine(54, 0, 64, 1);

@@ -82,8 +82,7 @@ struct Lion {
         bool decSteps() { 
 
             this->steps--; 
-// Serial.print("Steps ");
-// Serial.println(this->steps);
+
             if (this->steps % 3 == 0) {
 
                 this->stepsOrig = this->stepsOrig - 3;
@@ -110,19 +109,13 @@ struct Lion {
             }
 
             return (this->steps == 0);
-//            return (this->steps % 3 == 0);
 
         }
         
         int8_t getYDisplay() { 
             
             int8_t yPos = (static_cast<uint8_t>(this->y) * 21) - 1; 
-// Serial.print("getYDisplay() stepsOrig ");            
-// Serial.print(this->stepsOrig);
-// Serial.print(" steps ");            
-// Serial.print(this->steps);
-// Serial.print(" = ");            
-// Serial.println((this->stepsOrig - this->steps));
+
             switch (this->direction) {
 
                 case Direction::Up:

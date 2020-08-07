@@ -16,10 +16,12 @@ Lion lion1;
 Lion lion2;
 Explosions explosions;
 
-bool explosionSet = false;
 Direction lionAttacking = Direction::None;
 uint8_t lionAttackingIndex = 0;
 GameState gameState = GameState::Title_Init;
+GameMode gameMode = GameMode::OnePlayer;
+
+bool explosionSet = false;
 uint8_t frameRate = 50;
 int16_t counter = 10;
 

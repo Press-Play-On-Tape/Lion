@@ -4,7 +4,9 @@ void title() {
 
     counter++;
     if (counter == 176) counter = 0;
-    if (arduboy.justPressed(A_BUTTON)) { gameState = GameState::PlayGame_Init; }
+
+    if (arduboy.justPressed(A_BUTTON)) { gameMode = GameMode::TwoPlayer; gameState = GameState::PlayGame_Init; }
+    if (arduboy.justPressed(B_BUTTON)) { gameMode = GameMode::OnePlayer; gameState = GameState::PlayGame_Init; }
 
     Sprites::drawOverwrite(0, 0, Images::Title, 0);
 

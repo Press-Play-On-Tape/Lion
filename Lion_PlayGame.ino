@@ -64,7 +64,7 @@ void playGame(void) {
     //  Render the screen ..
 
     renderBackground();
-    renderCage();
+    renderCage(gameMode);
     
     // Lions ..
 
@@ -95,8 +95,17 @@ void playGame(void) {
         Sprites::drawExternalMask(player1.getXDisplay(), player1.getYDisplay(), Images::Player_01, Images::Player_01_Mask, player01Frame, player01Frame);
     }
 
-    if ((lionAttacking == Direction::Right && explosions.getCounter() > 0) || lionAttacking != Direction::Right) {
-        Sprites::drawExternalMask(player2.getXDisplay(), player2.getYDisplay(), Images::Player_02, Images::Player_02_Mask, player02Frame, player02Frame);
+    if (gameMode == GameMode::TwoPlayer) {
+
+        if ((lionAttacking == Direction::Right && explosions.getCounter() > 0) || lionAttacking != Direction::Right) {
+            Sprites::drawExternalMask(player2.getXDisplay(), player2.getYDisplay(), Images::Player_02, Images::Player_02_Mask, player02Frame, player02Frame);
+        }
+
+    }
+    else {
+
+        Sprites::drawExternalMask(104, 30, Images::Player_02_Sitting, Images::Player_02_Sitting_Mask, 0, 0);
+
     }
 
     bool explosionRendered = renderExplosion();
@@ -104,7 +113,7 @@ void playGame(void) {
     if (!explosionRendered) {
 
         renderScoreBoard(player1);
-        renderScoreBoard(player2);
+        if (gameMode == GameMode::TwoPlayer) renderScoreBoard(player2);
         
     }
 
