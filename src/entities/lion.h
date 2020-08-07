@@ -114,9 +114,9 @@ struct Lion {
 
         }
         
-        uint8_t getYDisplay() { 
+        int8_t getYDisplay() { 
             
-            uint8_t yPos = static_cast<uint8_t>(this->y) * 21; 
+            int8_t yPos = (static_cast<uint8_t>(this->y) * 21) - 1; 
 // Serial.print("getYDisplay() stepsOrig ");            
 // Serial.print(this->stepsOrig);
 // Serial.print(" steps ");            
