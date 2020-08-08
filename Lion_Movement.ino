@@ -179,8 +179,8 @@ void moveLion(Lion &thisLion, Lion &otherLion) {
                         uint8_t thisLionX = static_cast<uint8_t>(thisLion.getXPosition());
                         uint8_t otherLionX = static_cast<uint8_t>(otherLion.getXPosition());
 
-                        if (rnd && ((otherLionX - thisLionX > 3 && otherLion.getDirection() == Direction::Left) ||
-                                    (otherLionX - thisLionX > 5 && otherLion.getDirection() == Direction::Right))) {
+                        if (rnd && ((thisLionX - otherLionX < -3 && otherLion.getDirection() == Direction::Left) ||
+                                    (thisLionX - otherLionX < -5 && otherLion.getDirection() == Direction::Right))) {
 
                             changeLevel(thisLion, otherLion, Direction::Left);
 
@@ -201,7 +201,7 @@ void moveLion(Lion &thisLion, Lion &otherLion) {
 
                 case XPosition::RH_Position4:
 
-                    if (true /*player1.getYPosition() == thisLion.getYPosition()*/) {
+                    if (player2.getYPosition() == thisLion.getYPosition()) {
 
                         bool rnd = (random(0, 3) == 0);
 
@@ -217,7 +217,8 @@ void moveLion(Lion &thisLion, Lion &otherLion) {
                         }
                         else {
 
-                            thisLion.setDirection(Direction::Left);
+                            thisLion.incXPosition();
+                            player2.incScore();
 
                         }
 
@@ -232,7 +233,90 @@ void moveLion(Lion &thisLion, Lion &otherLion) {
 
                 case XPosition::RH_Attack: 
 
-                    thisLion.setDirection(Direction::Left);
+                    if (player2.getYPosition() == thisLion.getYPosition() && random(0, 2) == 0) {
+
+                        thisLion.decXPosition();
+                        thisLion.setDirection(Direction::Left);
+
+                    }
+                    else {
+
+                        thisLion.incXPosition();
+
+                    }
+
+                    break;
+
+                case XPosition::RH_Attack_OutofCage: 
+
+                    if (player2.getYPosition() == thisLion.getYPosition()) {
+
+                        thisLion.decXPosition();
+                        thisLion.setDirection(Direction::Left);
+
+                    }
+                    else {
+
+                        thisLion.incXPosition();
+
+                    }
+
+                    break;
+
+                case XPosition::RH_Attacking:
+
+                    lionAttacking = Direction::Right;
+                    lionAttackingIndex = thisLion.getIndex();
+
+                    if (player2.getYPosition() < thisLion.getYPosition()) {
+
+                        thisLion.setXPosition(XPosition::RH_Attacking_Up);
+
+                    }
+                    else if (player2.getYPosition() > thisLion.getYPosition()) {
+
+                        thisLion.setXPosition(XPosition::RH_Attacking_Down);
+
+                    }
+                    else {
+
+                        thisLion.setXPosition(XPosition::RH_Attacking_Left);
+
+                    }
+
+                    break;
+
+                case XPosition::RH_Attacking_Up:
+                case XPosition::RH_Attacking_Down:
+                case XPosition::RH_Attacking_Left:
+
+                    if (!explosionSet) {
+
+                        int16_t y = 0;
+
+                        switch (thisLion.getXPosition()) {
+
+                            case XPosition::RH_Attacking_Up:
+                                y = player2.getYDisplay() + 7;
+                                break;
+
+                            case XPosition::RH_Attacking_Down:
+                                y = player2.getYDisplay() + 11;
+                                break;
+
+                            case XPosition::RH_Attacking_Left:
+                                y = player1.getYDisplay() + 9;
+                                break;
+
+                            default:    break;
+
+                        }
+
+                        explosions.setExplosions(92, y);
+                        explosionSet = true;
+
+                    }
+
                     break;
 
                 default:
