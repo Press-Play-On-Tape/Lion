@@ -12,12 +12,6 @@ enum class GameState : uint8_t {
 
 };
 
-enum class GameMode : uint8_t {
-
-    OnePlayer,
-    TwoPlayer,
-
-};
 
 enum class Direction : uint8_t {
 

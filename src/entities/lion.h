@@ -6,38 +6,9 @@
 
 struct Lion {
 
-    // 0 = Lion_00_LH
-    // 1 = Lion_01_LH
-    // 2 = Lion_02_LH
-    // 3 = Lion_00_RH
-    // 4 = Lion_01_RH
-    // 5 = Lion_02_RH
-    // 6 = Down
-    // 7 = Up
-        
-    // LH_Attacking_Left,
-    // LH_Attacking_Down,
-    // LH_Attacking_Up,
-    // LH_Attacking,
-    // LH_Attack_OutofCage,
-    // LH_Attack,
-    // LH_Position4,
-    // LH_Position3,
-    // LH_Position2,
-    // LH_Position1,
-    // Centre,
-    // RH_Position1,
-    // RH_Position2,
-    // RH_Position3,
-    // RH_Position4,
-    // RH_Attack,
-    // RH_Attack_OutofCage,
-    // RH_Attacking,
-    // RH_Attacking_Up,
-    // RH_Attacking_Down,
-    // RH_Attacking_Left,
-
-    const uint8_t xPositions[21] =      { 18, 5, 5, 18, 20, 28, 33, 38, 43, 48,   53,   58, 63, 68, 73, 78, 86, 91, 91, 100 };
+    const uint8_t xPositions[3][21] =   {{ 17, 4, 4, 36, 38, 40, 42, 44, 46, 48,   52,   56, 58, 60, 62, 64, 66, 90, 90, 100 },
+                                         { 17, 4, 4, 30, 33, 36, 39, 42, 45, 48,   52,   56, 59, 62, 67, 68, 71, 74, 90, 100 },
+                                         { 18, 5, 5, 24, 28, 32, 36, 40, 44, 48,   52,   56, 60, 64, 68, 72, 76, 80, 90, 100 }};
     const uint8_t leftImages[21] =      {  2, 6, 7,  2,  2,  2,  0,  1,  0,  1,    0,    1,  0,  1,  0,  1,  0,  0,  0,   0 };
     const uint8_t rightImages[21] =     {  0, 0, 0,  0,  4,  3,  4,  3,  4,  3,    4,    3,  4,  3,  4,  5,  5,  7,  6,   5 };
 
@@ -77,7 +48,11 @@ struct Lion {
         void decYPosition()                         { if (this->y != YPosition::Level_1) this->y--; }
         void incYPosition()                         { if (this->y != YPosition::Level_3) this->y++; }
 
-        uint8_t getXDisplay()                       { return this->xPositions[static_cast<uint8_t>(this->x)]; }
+        uint8_t getXDisplay() { 
+        
+            return this->xPositions[static_cast<uint8_t>(this->y)][static_cast<uint8_t>(this->x)]; 
+            
+        }
         
         bool decSteps() { 
 
@@ -113,8 +88,10 @@ struct Lion {
         }
         
         int8_t getYDisplay() { 
+
+            const int8_t yPositions[] = { -4, 16, 37 };            
             
-            int8_t yPos = (static_cast<uint8_t>(this->y) * 21) - 1; 
+            int8_t yPos = yPositions[static_cast<uint8_t>(this->y)]; 
 
             switch (this->direction) {
 
@@ -142,18 +119,14 @@ struct Lion {
 
                 case Direction::Right:
                     return this->rightImages[static_cast<uint8_t>(this->x)];
-                
-                default:
 
-                    switch (this->nextDirection) {
-                        
-                        case Direction::Left:
-                            return this->leftImages[static_cast<uint8_t>(this->x)];
+                case Direction::Up:
+                    return 7;
 
-                        default:
-                            return this->rightImages[static_cast<uint8_t>(this->x)];
+                case Direction::Down:
+                    return 6;
 
-                    }
+                default: return 0;
 
             }
 

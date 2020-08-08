@@ -44,6 +44,23 @@ struct Explosions {
 
         }
 
+        void setExplosionsTitle(int16_t x, int16_t y) {
+
+            this->counter = 17;
+            this->x = x;
+            this->y = y;
+
+            for (uint8_t i = 0; i < 30; i++) {
+
+                this->explosion[i].setX(x + ((i % 14) - 7));
+                this->explosion[i].setY(y + ((i % 14) - 7));
+                this->explosion[i].setCounter(-random(0, 32));
+                this->explosion[i].setDirection(random(3, 6));
+                
+            }
+
+        }
+
         bool update(bool altFrame) {
 
             bool finished = true;

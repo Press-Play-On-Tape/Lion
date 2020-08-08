@@ -1,4 +1,4 @@
-#include <Arduboy2.h>
+#include "src/utils/Arduboy2Ext.h"
 #include "src/images/Images.h"
 #include "src/utils/Consts.h"
 #include "src/entities/Player.h"
@@ -7,7 +7,7 @@
 #include "src/entities/Explosion.h"
 #include "src/fonts/Font3x5.h"
 
-Arduboy2Base arduboy;
+Arduboy2Ext arduboy;
 Font3x5 font3x5 = Font3x5();
 
 Player player1;
@@ -19,11 +19,12 @@ Explosions explosions;
 Direction lionAttacking = Direction::None;
 uint8_t lionAttackingIndex = 0;
 GameState gameState = GameState::Title_Init;
-GameMode gameMode = GameMode::OnePlayer;
 
 bool explosionSet = false;
 uint8_t frameRate = 50;
 int16_t counter = 10;
+uint16_t score = 0;
+uint8_t numberOfLives = 3;
 
 void setup(void) {
 
@@ -42,7 +43,6 @@ void loop(void) {
 	if (!arduboy.nextFrame()) return;
 
 	arduboy.pollButtons();
-    arduboy.clear();
 
     switch (gameState) {
 
@@ -50,6 +50,8 @@ void loop(void) {
 
             gameState = GameState::Title;
             counter = -64;
+            score = 0;
+            numberOfLives = 3;
             [[fallthrough]]
 
         case GameState::Title:
@@ -66,8 +68,8 @@ void loop(void) {
 
             playGame();
 
-            if (frameRate != 50 + (player1.getScore() / 8)) {
-                frameRate = 50 + (player1.getScore() / 8);
+            if (frameRate != 50 + (score / 8)) {
+                frameRate = 50 + (score / 8);
                 arduboy.setFrameRate(frameRate);
             }
             break;
@@ -75,7 +77,7 @@ void loop(void) {
     }
 
 
-    arduboy.display();
+    arduboy.displayClearToWhite();
 
 }
 

@@ -1,53 +1,27 @@
 
 void renderBackground() {
 
-    Sprites::drawOverwrite(0, 0, Images::Tree_LH, 0);
-    Sprites::drawOverwrite(96, 0, Images::Tree_RH, 0);
+    Sprites::drawOverwrite(0, 0, Images::Scenery_LH, 0);
+    Sprites::drawOverwrite(106, 0, Images::Scenery_RH, 0);
+    Sprites::drawOverwrite(27, 0 , Images::Cage, 0);
 
 }
 
-void renderCage(GameMode gameMode) {
+void renderScoreBoards(uint16_t score, uint8_t numberOfLives) {
 
-    arduboy.drawFastHLine(36, 0, 55);
-    arduboy.drawFastHLine(36, 21, 55);
-    arduboy.drawFastHLine(36, 42, 55);
-    arduboy.drawFastHLine(36, 63, 55);
+    Sprites::drawOverwrite(-1, 56, Images::Scoreboard_LH, 0);
+    Sprites::drawOverwrite(114, 56, Images::Scoreboard_RH, 0);
 
-    arduboy.drawFastVLine(36, 0, 3);
-    arduboy.drawFastVLine(36, 19, 5);
-    arduboy.drawFastVLine(36, 40, 5);
-    arduboy.drawFastVLine(36, 61, 3);
+    font3x5.setCursor(1, 57);
+    if (score < 100) font3x5.print(F("0"));
+    if (score < 10)  font3x5.print(F("0"));
+    font3x5.print(score);
 
-    if (gameMode == GameMode::TwoPlayer) {
+    for (uint8_t x = 126, y = numberOfLives; y > 0; x = x - 2, y--) {
 
-        arduboy.drawFastVLine(90, 0, 3);
-        arduboy.drawFastVLine(90, 19, 5);
-        arduboy.drawFastVLine(90, 40, 5);
-        arduboy.drawFastVLine(90, 61, 3);
+        arduboy.drawFastVLine(x, 58, 5, BLACK);
 
     }
-    else {
-
-        arduboy.drawFastVLine(90, 0, 64);
-
-    }
-
-    drawVerticalDottedLine(45, 0, 64, 1);
-    drawVerticalDottedLine(54, 0, 64, 1);
-    drawVerticalDottedLine(63, 0, 64, 1);
-    drawVerticalDottedLine(72, 0, 64, 1);
-    drawVerticalDottedLine(81, 0, 64, 1);
-
-}
-
-void renderScoreBoard(Player &player) {
-
-    Sprites::drawOverwrite(player.getIndex() == Constants::Player1_Index ? -1 : 114, 56, Images::Scoreboard, 0);
-
-    font3x5.setCursor(player.getIndex() == Constants::Player1_Index ? 1 : 116, 57);
-    if (player.getScore() < 100) font3x5.print(F("0"));
-    if (player.getScore() < 10)  font3x5.print(F("0"));
-    font3x5.print(player.getScore());
 
 }
 
@@ -63,7 +37,8 @@ bool renderExplosion() {
         Explosion explosion = explosions.getExplosion(i);
         
         if (explosion.render()) {
-            Sprites::drawExternalMask(explosion.getX(), explosion.getY(), Images::Pixel, Images::Pixel_Mask, 0, 0);
+            arduboy.drawPixel(explosion.getX() + 1, explosion.getY() + 1, BLACK);
+//            Sprites::drawExternalMask(explosion.getX(), explosion.getY(), Images::Pixel, Images::Pixel_Mask, 0, 0);
             anythingRendered = true;
         }
 

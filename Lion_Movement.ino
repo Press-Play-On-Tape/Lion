@@ -60,7 +60,7 @@ void moveLion(Lion &thisLion, Lion &otherLion) {
                         else {
 
                             thisLion.decXPosition();
-                            player1.incScore();
+                            score++;
 
                         }
 
@@ -108,21 +108,25 @@ void moveLion(Lion &thisLion, Lion &otherLion) {
                 case XPosition::LH_Attacking:
 
                     lionAttacking = Direction::Left;
+// Serial.println(">> Set to zero.");                    
                     lionAttackingIndex = thisLion.getIndex();
 
                     if (player1.getYPosition() < thisLion.getYPosition()) {
 
+// Serial.println(">> Set to zero 1.");                    
                         thisLion.setXPosition(XPosition::LH_Attacking_Up);
 
                     }
                     else if (player1.getYPosition() > thisLion.getYPosition()) {
 
                         thisLion.setXPosition(XPosition::LH_Attacking_Down);
+// Serial.println(">> Set to zero 2.");                    
                     }
                     else {
 
                         thisLion.setXPosition(XPosition::LH_Attacking_Left);
 
+// Serial.println(">> Set to zero 3.");                    
                     }
 
                     break;
@@ -130,7 +134,8 @@ void moveLion(Lion &thisLion, Lion &otherLion) {
                 case XPosition::LH_Attacking_Up:
                 case XPosition::LH_Attacking_Down:
                 case XPosition::LH_Attacking_Left:
-
+// Serial.print(">> A ");
+// Serial.println(explosionSet);
                     if (!explosionSet) {
 
                         int16_t y = 0;
@@ -153,9 +158,10 @@ void moveLion(Lion &thisLion, Lion &otherLion) {
 
                         }
 
-                        explosions.setExplosions(12, y);
+                        explosions.setExplosions(player1.getXDisplay() + 8, y);
                         explosionSet = true;
-
+                        numberOfLives--;
+// Serial.println("1 --");
                     }
 
                     break;
@@ -218,7 +224,7 @@ void moveLion(Lion &thisLion, Lion &otherLion) {
                         else {
 
                             thisLion.incXPosition();
-                            player2.incScore();
+                            score++;
 
                         }
 
@@ -312,8 +318,10 @@ void moveLion(Lion &thisLion, Lion &otherLion) {
 
                         }
 
-                        explosions.setExplosions(92, y);
+                        explosions.setExplosions(player2.getXDisplay() + 16, y);
                         explosionSet = true;
+                        numberOfLives--;
+// Serial.println("2 --");
 
                     }
 
