@@ -130,5 +130,7 @@ namespace Constants {
     constexpr uint8_t Level_1 = 0;
     constexpr uint8_t Level_2 = 1;
     constexpr uint8_t Level_3 = 2;
+
+    constexpr uint8_t Led_Delay = 8;
  
 }

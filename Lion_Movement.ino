@@ -60,7 +60,7 @@ void moveLion(Lion &thisLion, Lion &otherLion) {
                         else {
 
                             thisLion.decXPosition();
-                            score++;
+                            increaseScore();
 
                         }
 
@@ -96,6 +96,7 @@ void moveLion(Lion &thisLion, Lion &otherLion) {
                         thisLion.incXPosition();
                         thisLion.setDirection(Direction::Right);
 
+                        
                     }
                     else {
 
@@ -155,8 +156,7 @@ void moveLion(Lion &thisLion, Lion &otherLion) {
                         }
 
                         explosions.setExplosions(player1.getXDisplay() + 8, y);
-                        // explosionSet = true;
-                        numberOfLives--;
+                        die();
 
                     }
 
@@ -220,7 +220,7 @@ void moveLion(Lion &thisLion, Lion &otherLion) {
                         else {
 
                             thisLion.incXPosition();
-                            score++;
+                            increaseScore();
 
                         }
 
@@ -266,7 +266,6 @@ void moveLion(Lion &thisLion, Lion &otherLion) {
                     break;
 
                 case XPosition::RH_Attacking:
-
 
                     if (player2.getYPosition() < thisLion.getYPosition()) {
 
@@ -316,9 +315,7 @@ void moveLion(Lion &thisLion, Lion &otherLion) {
                         }
 
                         explosions.setExplosions(player2.getXDisplay() + 16, y);
-                        // explosionSet = true;
-                        numberOfLives--;
-
+                        die();
                     }
 
                     break;
@@ -442,5 +439,23 @@ void changeOneLevel(Lion &thisLion, Lion &otherLion, Direction newDirection) {
 //        thisLion.setNextDirection(newDirection);
 
     }
+
+}
+
+void increaseScore() {
+
+    sound.tones(Sounds::LionBlocked);
+    arduboy.setRGBled(GREEN_LED, 16);
+    ledDelay = Constants::Led_Delay;
+    score++;
+
+}
+
+void die() {
+
+    sound.tones(Sounds::LionEscaped);
+    arduboy.setRGBled(GREEN_LED, 16);
+    ledDelay = Constants::Led_Delay;
+    numberOfLives--;
 
 }

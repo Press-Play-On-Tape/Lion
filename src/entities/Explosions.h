@@ -94,6 +94,7 @@ struct Explosions {
 
         void reset() {
 
+            this->explosionSet = false;
             this->counter = 0;
             
             for (uint8_t i = 0; i < 60; i++) {

@@ -37,6 +37,19 @@ void playGame(void) {
 
     if (counter > 0) counter--;
 
+    if (ledDelay > 0) {
+
+        ledDelay--;
+
+        if (ledDelay == 0) {
+
+            arduboy.setRGBled(RED_LED, 0);
+            arduboy.setRGBled(GREEN_LED, 0);
+
+        }
+
+    }
+
 
     // Handle explosion (if one is happening) ..
 
@@ -134,7 +147,7 @@ void playGame(void) {
 
         }
         else {
-            
+
             lifeReset();
             counter = 159;            
 
