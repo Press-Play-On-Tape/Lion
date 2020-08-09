@@ -2,41 +2,55 @@
 
 void title() {
 
-    Sprites::drawOverwrite(0, 0, Images::Title_LionTop, 0);
-    counter++;
+    if (counter >= 0) counter++;
 
-    if (arduboy.justPressed(A_BUTTON)) { gameState = GameState::PlayGame_Init; }
+    Sprites::drawOverwrite(0, 0, Images::Title_LionTop, 0);
+
+    if (arduboy.justPressed(A_BUTTON)) { 
+        
+        if (counter == -1) {
+
+            counter = 0;
+
+        }
+        else {
+
+            gameState = GameState::PlayGame_Init;
+
+        }
+
+    }
 
     switch (counter) {
 
-        case -200 ... 185:
+        case -1:
             Sprites::drawOverwrite(50, 12, Images::Title, 0);
             Sprites::drawOverwrite(0, 32, Images::Title_Lion_00, 0);
             break;
 
-        case 186 ... 195:
+        case 0 ... 9:
             Sprites::drawOverwrite(0, 32, Images::Title_Lion_00, 0);
             break;
 
-        case 196:
+        case 10:
             explosions.setExplosionsTitle(35, 35);
             Sprites::drawOverwrite(50, 12, Images::Title, 0);
             Sprites::drawOverwrite(0, 32, Images::Title_Lion_01, 0);
             break;
 
-        case 197 ... 320:
+        case 11 ... 135:
             Sprites::drawOverwrite(0, 32, Images::Title_Lion_01, 0);
             Sprites::drawExternalMask(52 + ((counter % 3) - 1), 6 + ((counter % 3) - 1), Images::Roar, Images::Roar_Mask, 0, 0);
             break;
 
-        case 321 ... 330:
+        case 136 ... 145:
             Sprites::drawOverwrite(0, 32, Images::Title_Lion_01, 0);
             break;
 
-        case 331:
+        case 146:
             Sprites::drawOverwrite(50, 12, Images::Title, 0);
             Sprites::drawOverwrite(0, 32, Images::Title_Lion_00, 0);
-            counter = 0;
+            gameState = GameState::PlayGame_Init;
             break;
 
     }
@@ -48,7 +62,7 @@ void title() {
 
         Explosion explosion = explosions.getExplosion(i);
         arduboy.drawPixel(explosion.getX() + 1, explosion.getY() + 1, BLACK);
-//        Sprites::drawExternalMask(explosion.getX(), explosion.getY(), Images::Pixel, Images::Pixel_Mask, 0, 0);
+        //Sprites::drawExternalMask(explosion.getX(), explosion.getY(), Images::Pixel, Images::Pixel_Mask, 0, 0);
 
     }
 

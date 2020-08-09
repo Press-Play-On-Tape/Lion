@@ -72,11 +72,12 @@ struct Explosions {
                     finished = false;
 
                 }
+                else {
+                }
                 
             }
 
             if (this->counter > 0) this->counter--;
-
             return finished;
 
         }

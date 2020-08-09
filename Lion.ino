@@ -49,7 +49,7 @@ void loop(void) {
         case GameState::Title_Init:
 
             gameState = GameState::Title;
-            counter = -64;
+            counter = -1;
             score = 0;
             numberOfLives = 3;
             [[fallthrough]]

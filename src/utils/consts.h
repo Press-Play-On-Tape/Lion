@@ -109,7 +109,7 @@ namespace Constants {
   
     constexpr uint8_t Player2_Index = 2;
     constexpr uint8_t Player2_XPos = 101;
-    constexpr YPosition Player2_YPos = YPosition::Level_1;
+    constexpr YPosition Player2_YPos = YPosition::Level_3;
 
     constexpr uint8_t Lion1_Index = 1;
     constexpr uint8_t Lion2_Index = 2;

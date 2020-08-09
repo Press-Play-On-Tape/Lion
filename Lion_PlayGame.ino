@@ -29,7 +29,7 @@ void playGame(void) {
     //  Update entity positions ..
 
     if (counter > 0) counter--;
-// Serial.println(counter);
+
 
     // Handle explosion (if one is happening) ..
 
@@ -49,8 +49,8 @@ void playGame(void) {
 
     if (counter == 0 && lionAttacking == Direction::None && arduboy.everyXFrames(4)) {
 
-        if (arduboy.pressed(A_BUTTON))              { player2.decYPosition(); }
-        if (arduboy.pressed(B_BUTTON))              { player2.incYPosition(); }
+        if (arduboy.pressed(A_BUTTON))              { player2.incYPosition(); }
+        if (arduboy.pressed(B_BUTTON))              { player2.decYPosition(); }
 
         if (arduboy.pressed(UP_BUTTON))             { player1.decYPosition(); }
         if (arduboy.pressed(DOWN_BUTTON))           { player1.incYPosition(); }
@@ -115,11 +115,7 @@ void playGame(void) {
     // Is the game over ?
 
     if (finished && lionAttacking != Direction::None) {
-// Serial.print(">>>>>> ");
-// Serial.print(finished);
-// Serial.print(" ");
-// Serial.print((uint8_t)lionAttacking);
-// Serial.println(" ");
+
         if (numberOfLives == 0) {
     
             Sprites::drawExternalMask(24, 21, Images::GameOver, Images::GameOver_Mask, 0, 0);
@@ -131,52 +127,55 @@ void playGame(void) {
             lion2.reset(Direction::Right, YPosition::Level_3, 8, Constants::Lion2_Index);
             lionAttacking = Direction::None;
             counter = 159;            
-            // explosionSet = false;
-Serial.println("asdasd");
+            explosionSet = false;
+            explosions.reset();
+
         }
 
     }
 
 
     // Render counter?
+    {
+        uint8_t frame = 255;
 
-    uint8_t frame = 255;
+        switch (counter) {
+            
+            case 0 ... 4:
+                break;
 
-    switch (counter) {
-        
-        case 0 ... 4:
-            break;
+            case 5 ... 39:
+                frame = 3;
+                break;
+            
+            case 40 ... 44:
+                break;
 
-        case 5 ... 39:
-            frame = 3;
-            break;
-        
-        case 40 ... 44:
-            break;
+            case 45 ... 79:
+                frame = 2;
+                break;
+            
+            case 80 ... 84:
+                break;
 
-        case 45 ... 79:
-            frame = 2;
-            break;
-        
-        case 80 ... 84:
-            break;
+            case 85 ... 119:
+                frame = 1;
+                break;
+            
+            case 120 ... 124:
+                break;
 
-        case 85 ... 119:
-            frame = 1;
-            break;
-        
-        case 120 ... 124:
-            break;
-
-        case 125 ... 159:
-            frame = 0;
-            break;
+            case 125 ... 159:
+                frame = 0;
+                break;
 
 
-    }
+        }
 
-    if (frame != 255) {
-        Sprites::drawExternalMask(52, 21, Images::Count, Images::Count_Mask, frame, 0);
+        if (frame != 255) {
+            Sprites::drawExternalMask(52, 21, Images::Count, Images::Count_Mask, frame, 0);
+        }
+
     }
 
 }

@@ -107,26 +107,21 @@ void moveLion(Lion &thisLion, Lion &otherLion) {
 
                 case XPosition::LH_Attacking:
 
-                    lionAttacking = Direction::Left;
-// Serial.println(">> Set to zero.");                    
-                    lionAttackingIndex = thisLion.getIndex();
 
                     if (player1.getYPosition() < thisLion.getYPosition()) {
 
-// Serial.println(">> Set to zero 1.");                    
                         thisLion.setXPosition(XPosition::LH_Attacking_Up);
 
                     }
                     else if (player1.getYPosition() > thisLion.getYPosition()) {
 
                         thisLion.setXPosition(XPosition::LH_Attacking_Down);
-// Serial.println(">> Set to zero 2.");                    
+
                     }
                     else {
 
                         thisLion.setXPosition(XPosition::LH_Attacking_Left);
 
-// Serial.println(">> Set to zero 3.");                    
                     }
 
                     break;
@@ -134,8 +129,10 @@ void moveLion(Lion &thisLion, Lion &otherLion) {
                 case XPosition::LH_Attacking_Up:
                 case XPosition::LH_Attacking_Down:
                 case XPosition::LH_Attacking_Left:
-// Serial.print(">> A ");
-// Serial.println(explosionSet);
+
+                    lionAttacking = Direction::Left;
+                    lionAttackingIndex = thisLion.getIndex();
+
                     if (!explosionSet) {
 
                         int16_t y = 0;
@@ -161,7 +158,7 @@ void moveLion(Lion &thisLion, Lion &otherLion) {
                         explosions.setExplosions(player1.getXDisplay() + 8, y);
                         explosionSet = true;
                         numberOfLives--;
-// Serial.println("1 --");
+
                     }
 
                     break;
@@ -271,8 +268,6 @@ void moveLion(Lion &thisLion, Lion &otherLion) {
 
                 case XPosition::RH_Attacking:
 
-                    lionAttacking = Direction::Right;
-                    lionAttackingIndex = thisLion.getIndex();
 
                     if (player2.getYPosition() < thisLion.getYPosition()) {
 
@@ -295,6 +290,9 @@ void moveLion(Lion &thisLion, Lion &otherLion) {
                 case XPosition::RH_Attacking_Up:
                 case XPosition::RH_Attacking_Down:
                 case XPosition::RH_Attacking_Left:
+
+                    lionAttacking = Direction::Right;
+                    lionAttackingIndex = thisLion.getIndex();
 
                     if (!explosionSet) {
 
@@ -321,7 +319,6 @@ void moveLion(Lion &thisLion, Lion &otherLion) {
                         explosions.setExplosions(player2.getXDisplay() + 16, y);
                         explosionSet = true;
                         numberOfLives--;
-// Serial.println("2 --");
 
                     }
 
