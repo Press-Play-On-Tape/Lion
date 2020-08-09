@@ -24,32 +24,29 @@ void title() {
     switch (counter) {
 
         case -1:
-            Sprites::drawOverwrite(50, 12, Images::Title, 0);
-            Sprites::drawOverwrite(0, 32, Images::Title_Lion_00, 0);
+            drawElements(true, 0);
             break;
 
         case 0 ... 9:
-            Sprites::drawOverwrite(0, 32, Images::Title_Lion_00, 0);
+            drawElements(false, 0);
             break;
 
         case 10:
             explosions.setExplosionsTitle(35, 35);
-            Sprites::drawOverwrite(50, 12, Images::Title, 0);
-            Sprites::drawOverwrite(0, 32, Images::Title_Lion_01, 0);
+            drawElements(true, 1);
             break;
 
         case 11 ... 135:
-            Sprites::drawOverwrite(0, 32, Images::Title_Lion_01, 0);
+            drawElements(false, 1);
             Sprites::drawExternalMask(52 + ((counter % 3) - 1), 6 + ((counter % 3) - 1), Images::Roar, Images::Roar_Mask, 0, 0);
             break;
 
         case 136 ... 145:
-            Sprites::drawOverwrite(0, 32, Images::Title_Lion_01, 0);
+            drawElements(false, 1);
             break;
 
         case 146:
-            Sprites::drawOverwrite(50, 12, Images::Title, 0);
-            Sprites::drawOverwrite(0, 32, Images::Title_Lion_00, 0);
+            drawElements(true, 0);
             gameState = GameState::PlayGame_Init;
             break;
 
@@ -67,5 +64,12 @@ void title() {
     }
 
     explosions.update(random(0, 2));
+
+}
+
+void drawElements(bool title, uint8_t lionFrame) {
+
+    if (title) Sprites::drawOverwrite(50, 12, Images::Title, 0);
+    Sprites::drawOverwrite(0, 32, Images::Title_Lion_Bottom, lionFrame);
 
 }

@@ -2,23 +2,30 @@
 
 void playGame_Init() {
 
+    lifeReset();
+
+    arduboy.setFrameRate(50);
+    
+    gameState = GameState::PlayGame;
+    frameRate = 50;
+    frameRate = 50;
+    counter = 159;
+
+}
+
+void lifeReset() {
+
+    explosionSet = false;
+    explosions.reset();
+
+    lionAttacking = Direction::None;
+    lionAttackingIndex = 0;
+
     player1.reset(Constants::Player1_Index, Constants::Player1_YPos); 
     player2.reset(Constants::Player2_Index, Constants::Player2_YPos); 
 
     lion1.reset(Direction::Left, YPosition::Level_1, 8, Constants::Lion1_Index);
     lion2.reset(Direction::Right, YPosition::Level_3, 8, Constants::Lion2_Index);
-
-    explosions.reset();
-    arduboy.setFrameRate(50);
-    
-    gameState = GameState::PlayGame;
-    frameRate = 50;
-    explosionSet = false;
-    lionAttacking = Direction::None;
-    lionAttackingIndex = 0;
-    frameRate = 50;
-
-    counter = 159;
 
 }
 
@@ -70,6 +77,7 @@ void playGame(void) {
     renderBackground();
 
 
+
     // Lions ..
 
     Sprites::drawExternalMask(lion1.getXDisplay(), lion1.getYDisplay(), Images::Lion, Images::Lion_Mask, lion1.getFrame(), lion1.getFrame());
@@ -78,22 +86,28 @@ void playGame(void) {
 
     // Player ..
 
-    uint8_t player01Frame = (
-        arduboy.frameCount % 8 < 4 && 
-        (
-            (player1.getYPosition() == lion1.getYPosition() && lion1.getXPosition() <= XPosition::LH_Attack) || 
-            (player1.getYPosition() == lion2.getYPosition() && lion2.getXPosition() <= XPosition::LH_Attack)
-        )         
-        ? 1 : 0);
+    uint8_t player01Frame = 0;
+    uint8_t player02Frame = 0;
 
-    uint8_t player02Frame = (
-        arduboy.frameCount % 8 < 4 && 
-        (
-            (player2.getYPosition() == lion1.getYPosition() && lion1.getXPosition() >= XPosition::RH_Attack) || 
-            (player2.getYPosition() == lion2.getYPosition() && lion2.getXPosition() >= XPosition::RH_Attack)
-        )         
-        ? 1 : 0);
+    if (arduboy.frameCount % 8 < 4) {
 
+        XPosition lion1X = lion1.getXPosition();
+        YPosition lion1Y = lion1.getYPosition();
+        XPosition lion2X = lion2.getXPosition();
+        YPosition lion2Y = lion2.getYPosition();
+
+        {
+            YPosition player1Y = player1.getYPosition();
+            player01Frame = ((player1Y == lion1Y && lion1X <= XPosition::LH_Attack) || (player1Y == lion2Y && lion2X <= XPosition::LH_Attack));
+        }
+
+        {
+            YPosition player2Y = player2.getYPosition();
+            player02Frame = ((player2Y == lion1Y && lion1X >= XPosition::RH_Attack) || (player2Y == lion2Y && lion2X >= XPosition::RH_Attack));
+
+        }
+
+    }
 
     if ((lionAttacking == Direction::Left && explosions.getCounter() > 0) || lionAttacking != Direction::Left) {
         Sprites::drawExternalMask(player1.getXDisplay(), player1.getYDisplay(), Images::Player_01, Images::Player_01_Mask, player01Frame, player01Frame);
@@ -103,9 +117,7 @@ void playGame(void) {
         Sprites::drawExternalMask(player2.getXDisplay(), player2.getYDisplay(), Images::Player_02, Images::Player_02_Mask, player02Frame, player02Frame);
     }
 
-    bool explosionRendered = renderExplosion();
-
-    if (!explosionRendered) {
+    if (!renderExplosion()) {
 
         renderScoreBoards(score, numberOfLives);
         
@@ -123,12 +135,8 @@ void playGame(void) {
         }
         else {
             
-            lion1.reset(Direction::Left, YPosition::Level_1, 8, Constants::Lion1_Index);
-            lion2.reset(Direction::Right, YPosition::Level_3, 8, Constants::Lion2_Index);
-            lionAttacking = Direction::None;
+            lifeReset();
             counter = 159;            
-            explosionSet = false;
-            explosions.reset();
 
         }
 
@@ -140,38 +148,27 @@ void playGame(void) {
         uint8_t frame = 255;
 
         switch (counter) {
-            
-            case 0 ... 4:
-                break;
 
             case 5 ... 39:
                 frame = 3;
-                break;
-            
-            case 40 ... 44:
                 break;
 
             case 45 ... 79:
                 frame = 2;
                 break;
-            
-            case 80 ... 84:
-                break;
 
             case 85 ... 119:
                 frame = 1;
-                break;
-            
-            case 120 ... 124:
                 break;
 
             case 125 ... 159:
                 frame = 0;
                 break;
 
+            default: break;
 
         }
-
+     
         if (frame != 255) {
             Sprites::drawExternalMask(52, 21, Images::Count, Images::Count_Mask, frame, 0);
         }
