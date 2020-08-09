@@ -15,7 +15,7 @@ void playGame_Init() {
 
 void lifeReset() {
 
-    explosionSet = false;
+    //explosionSet = false;
     explosions.reset();
 
     lionAttacking = Direction::None;

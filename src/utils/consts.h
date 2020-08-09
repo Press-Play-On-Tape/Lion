@@ -101,6 +101,19 @@ inline YPosition operator--(YPosition &c, int ) {
     return result;
 }
 
+// ---------------------------------------------------------------------------------
+// Extract individual digits of a uint16_t
+//
+template< size_t size >
+void extractDigits(uint8_t (&buffer)[size], uint16_t value) {
+
+    for(uint8_t i = 0; i < size; ++i) {
+        buffer[i] = value % 10;
+        value /= 10;
+    }
+
+}
+
 namespace Constants {
 
     constexpr uint8_t Player1_Index = 1;

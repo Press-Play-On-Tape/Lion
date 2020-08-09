@@ -107,7 +107,6 @@ void moveLion(Lion &thisLion, Lion &otherLion) {
 
                 case XPosition::LH_Attacking:
 
-
                     if (player1.getYPosition() < thisLion.getYPosition()) {
 
                         thisLion.setXPosition(XPosition::LH_Attacking_Up);
@@ -133,7 +132,7 @@ void moveLion(Lion &thisLion, Lion &otherLion) {
                     lionAttacking = Direction::Left;
                     lionAttackingIndex = thisLion.getIndex();
 
-                    if (!explosionSet) {
+                    if (!explosions.getExplosionSet()) {
 
                         int16_t y = 0;
 
@@ -156,7 +155,7 @@ void moveLion(Lion &thisLion, Lion &otherLion) {
                         }
 
                         explosions.setExplosions(player1.getXDisplay() + 8, y);
-                        explosionSet = true;
+                        // explosionSet = true;
                         numberOfLives--;
 
                     }
@@ -294,7 +293,7 @@ void moveLion(Lion &thisLion, Lion &otherLion) {
                     lionAttacking = Direction::Right;
                     lionAttackingIndex = thisLion.getIndex();
 
-                    if (!explosionSet) {
+                    if (!explosions.getExplosionSet()) {
 
                         int16_t y = 0;
 
@@ -317,7 +316,7 @@ void moveLion(Lion &thisLion, Lion &otherLion) {
                         }
 
                         explosions.setExplosions(player2.getXDisplay() + 16, y);
-                        explosionSet = true;
+                        // explosionSet = true;
                         numberOfLives--;
 
                     }
@@ -345,21 +344,23 @@ void changeLevel(Lion &thisLion, Lion &otherLion, Direction newDirection) {
 
         case YPosition::Level_1:
 
+            thisLion.setDirection(Direction::Down);
+
             switch (otherLion.getYPosition()) {
 
                 case YPosition::Level_1:
                 case YPosition::Level_3:
 
                     thisLion.setSteps(3);
-                    thisLion.setDirection(Direction::Down);
-                    thisLion.setNextDirection(newDirection);
+                    // thisLion.setDirection(Direction::Down);
+                    // thisLion.setNextDirection(newDirection);
                     break;
 
                 case YPosition::Level_2:
 
                     thisLion.setSteps(6);
-                    thisLion.setDirection(Direction::Down);
-                    thisLion.setNextDirection(newDirection);
+                    // thisLion.setDirection(Direction::Down);
+                    // thisLion.setNextDirection(newDirection);
                     break;
 
             }
@@ -368,21 +369,23 @@ void changeLevel(Lion &thisLion, Lion &otherLion, Direction newDirection) {
 
         case YPosition::Level_2:
 
+            thisLion.setSteps(3);
+
             switch (otherLion.getYPosition()) {
 
                 case YPosition::Level_1:
                 case YPosition::Level_2:
 
-                    thisLion.setSteps(3);
+                    // thisLion.setSteps(3);
                     thisLion.setDirection(Direction::Down);
-                    thisLion.setNextDirection(newDirection);
+                    // thisLion.setNextDirection(newDirection);
                     break;
 
                 case YPosition::Level_3:
 
-                    thisLion.setSteps(3);
+                    // thisLion.setSteps(3);
                     thisLion.setDirection(Direction::Up);
-                    thisLion.setNextDirection(newDirection);
+                    // thisLion.setNextDirection(newDirection);
                     break;
 
             }
@@ -391,21 +394,23 @@ void changeLevel(Lion &thisLion, Lion &otherLion, Direction newDirection) {
 
         case YPosition::Level_3:
 
+            thisLion.setDirection(Direction::Up);
+
             switch (otherLion.getYPosition()) {
 
                 case YPosition::Level_1:
                 case YPosition::Level_3:
 
                     thisLion.setSteps(3);
-                    thisLion.setDirection(Direction::Up);
-                    thisLion.setNextDirection(newDirection);
+                    // thisLion.setDirection(Direction::Up);
+                    // thisLion.setNextDirection(newDirection);
                     break;
 
                 case YPosition::Level_2:
 
                     thisLion.setSteps(6);
-                    thisLion.setDirection(Direction::Up);
-                    thisLion.setNextDirection(newDirection);
+                    // thisLion.setDirection(Direction::Up);
+                    // thisLion.setNextDirection(newDirection);
                     break;
 
             }
@@ -414,22 +419,27 @@ void changeLevel(Lion &thisLion, Lion &otherLion, Direction newDirection) {
 
     }
 
+    thisLion.setNextDirection(newDirection);
+
 }
 
 void changeOneLevel(Lion &thisLion, Lion &otherLion, Direction newDirection) {
 
+    thisLion.setSteps(3);
+    thisLion.setNextDirection(newDirection);
+
     if (thisLion.getYPosition() == YPosition::Level_2) {
 
-        thisLion.setSteps(3);
+        // thisLion.setSteps(3);
         thisLion.setDirection(otherLion.getYPosition() == YPosition::Level_1 ? Direction::Down : Direction::Up);
-        thisLion.setNextDirection(newDirection);
+        // thisLion.setNextDirection(newDirection);
 
     }
     else {
 
-        thisLion.setSteps(3);
+        // thisLion.setSteps(3);
         thisLion.setDirection(thisLion.getYPosition() == YPosition::Level_1 ? Direction::Down : Direction::Up);
-        thisLion.setNextDirection(newDirection);
+//        thisLion.setNextDirection(newDirection);
 
     }
 

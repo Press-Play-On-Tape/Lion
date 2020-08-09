@@ -1,3 +1,4 @@
+#include <Arduboy2.h>
 
 void renderBackground() {
 
@@ -12,10 +13,14 @@ void renderScoreBoards(uint16_t score, uint8_t numberOfLives) {
     Sprites::drawOverwrite(-1, 56, Images::Scoreboard_LH, 0);
     Sprites::drawOverwrite(114, 56, Images::Scoreboard_RH, 0);
 
-    font3x5.setCursor(1, 57);
-    if (score < 100) font3x5.print(F("0"));
-    if (score < 10)  font3x5.print(F("0"));
-    font3x5.print(score);
+    uint8_t digits[3] = {};
+    extractDigits(digits, score);
+    
+    for (uint8_t i = 3, x = 1; i > 0; i--, x = x + 4) {
+
+        Sprites::drawErase(x, 58, Images::Font, digits[i - 1]);
+
+    }
 
     for (uint8_t x = 126, y = numberOfLives; y > 0; x = x - 2, y--) {
 
@@ -37,8 +42,9 @@ bool renderExplosion() {
         Explosion explosion = explosions.getExplosion(i);
         
         if (explosion.render()) {
-            arduboy.drawPixel(explosion.getX() + 1, explosion.getY() + 1, BLACK);
+//            arduboy.drawPixel(explosion.getX() + 1, explosion.getY() + 1, BLACK);
 //            Sprites::drawExternalMask(explosion.getX(), explosion.getY(), Images::Pixel, Images::Pixel_Mask, 0, 0);
+            Sprites::drawExternalMask(explosion.getX() + 1, explosion.getY(), Images::Pixel, Images::Pixel_Mask, 0, 0);
             anythingRendered = true;
         }
 

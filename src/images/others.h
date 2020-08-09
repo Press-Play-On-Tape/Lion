@@ -2,13 +2,22 @@
 
 namespace Images {
 
+    // const unsigned char PROGMEM Pixel[] = {
+    // 3, 3,
+    // 0x00, 0x02, 0x00, 
+    // };
+
+    // const unsigned char PROGMEM Pixel_Mask[] = {
+    // 0x07, 0x07, 0x07, 
+    // };
+
     const unsigned char PROGMEM Pixel[] = {
-    3, 3,
-    0x00, 0x02, 0x00, 
+    1, 2,
+    0x01, 
     };
 
     const unsigned char PROGMEM Pixel_Mask[] = {
-    0x07, 0x07, 0x07, 
+    0x03, 
     };
 
     const unsigned char PROGMEM Scrap[] = {

@@ -58,8 +58,9 @@ void title() {
     for (uint8_t i = 0; i < 30; i++) {
 
         Explosion explosion = explosions.getExplosion(i);
-        arduboy.drawPixel(explosion.getX() + 1, explosion.getY() + 1, BLACK);
+        //arduboy.drawPixel(explosion.getX() + 1, explosion.getY() + 1, BLACK);
         //Sprites::drawExternalMask(explosion.getX(), explosion.getY(), Images::Pixel, Images::Pixel_Mask, 0, 0);
+        Sprites::drawExternalMask(explosion.getX() + 1, explosion.getY(), Images::Pixel, Images::Pixel_Mask, 0, 0);
 
     }
 

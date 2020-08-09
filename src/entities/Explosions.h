@@ -9,6 +9,7 @@ struct Explosions {
 
     private:
 
+        bool explosionSet = false;
         Explosion explosion[60];
         uint8_t counter = 0;
         int16_t x = 0;
@@ -19,16 +20,19 @@ struct Explosions {
         int16_t getX()                              { return this->x; }
         int16_t getY()                              { return this->y; }
         uint8_t getCounter()                        { return this->counter; }
+        bool getExplosionSet()                      { return this->explosionSet; }
 
         void setX(int16_t val)                      { this->x = val; }
         void setY(int16_t val)                      { this->y = val; }
         void setCounter(uint8_t val)                { this->counter = val; }
+        void setExplosionSet(bool val)              { this->explosionSet = val; }
 
 
     public:
 
         void setExplosions(int16_t x, int16_t y) {
 
+            this->setExplosionSet(true);
             this->counter = 17;
             this->x = x;
             this->y = y;

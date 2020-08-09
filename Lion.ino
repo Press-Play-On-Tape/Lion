@@ -5,10 +5,8 @@
 #include "src/entities/Lion.h"
 #include "src/entities/Explosions.h"
 #include "src/entities/Explosion.h"
-#include "src/fonts/Font3x5.h"
 
 Arduboy2Ext arduboy;
-Font3x5 font3x5 = Font3x5();
 
 Player player1;
 Player player2;
@@ -20,7 +18,7 @@ Direction lionAttacking = Direction::None;
 uint8_t lionAttackingIndex = 0;
 GameState gameState = GameState::Title_Init;
 
-bool explosionSet = false;
+//bool explosionSet = false;
 uint8_t frameRate = 50;
 int16_t counter = 10;
 uint16_t score = 0;
@@ -34,7 +32,6 @@ void setup(void) {
 	arduboy.audio.begin();
 	arduboy.initRandomSeed();
 	arduboy.setFrameRate(50);
-    font3x5.setTextColor(0);
 	
 }
 
