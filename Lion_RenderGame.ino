@@ -30,33 +30,52 @@ void renderScoreBoards(uint16_t score, uint8_t numberOfLives) {
 
 }
 
-// bool renderExplosion() {
+void renderPlayer(Player &player, const uint8_t *playerImages, const uint8_t *playerMask) {
 
-//     const uint8_t frame[] = { 0, 3, 3, 2, 2, 3, 3, 2, 2, 1, 1, 0, 0, 1, 1, 0, 0 };
+    uint8_t playerFrame = 0;
 
-//     bool anythingRendered = false;
-//     uint8_t counter = explosions.getCounter();
+    if (arduboy.frameCount % 8 < 4) {
 
-//     for (uint8_t i= 0; i < 60; i++) {
+        YPosition playerY = player.getYPosition();
+        playerFrame = ((playerY == lion1.getYPosition() && lion1.getXPosition() <= XPosition::LH_Attack) || (playerY == lion2.getYPosition() && lion2.getXPosition() >= XPosition::RH_Attack));
 
-//         Explosion explosion = explosions.getExplosion(i);
-        
-//         if (explosion.render()) {
-// //            arduboy.drawPixel(explosion.getX() + 1, explosion.getY() + 1, BLACK);
-// //            Sprites::drawExternalMask(explosion.getX(), explosion.getY(), Images::Pixel, Images::Pixel_Mask, 0, 0);
-//             Sprites::drawExternalMask(explosion.getX() + 1, explosion.getY(), Images::Pixel, Images::Pixel_Mask, 0, 0);
-//             anythingRendered = true;
-//         }
+    }
 
-//     }
+    if (!player.getRunning()) {
 
-//     if (counter > 0 && counter <= 16)  {
+        Sprites::drawExternalMask(player.getXDisplay(), player.getYDisplay(), playerImages, playerMask, playerFrame, playerFrame);
 
-//         Sprites::drawExternalMask(explosions.getX() - 8, explosions.getY() - 8, Images::Scrap, Images::Scrap_Mask, frame[counter], frame[counter]);
-//         anythingRendered = true;
+    }
+    else {
 
-//     }
+        switch (player.getXPosition()) {
 
-//     return anythingRendered;
+            case XPosition::LH_Attacking_Up:
+            case XPosition::RH_Attacking_Up:
+                Sprites::drawExternalMask(player.getXDisplay() + (player.getIndex() == Constants::Player2_Index ? 12 : 0), player.getYDisplay(), Images::Player_Up, Images::Player_Up_Mask, 0, 0);
+                break;
 
-// }
+            case XPosition::LH_Attacking_Down:
+            case XPosition::RH_Attacking_Down:
+                Sprites::drawExternalMask(player.getXDisplay() + (player.getIndex() == Constants::Player2_Index ? 12 : 0), player.getYDisplay(), Images::Player_Down, Images::Player_Down_Mask, 0, 0);
+                break;
+
+            default: break;
+
+        }
+
+    }
+
+}
+
+void renderLion(Lion &lion) {
+
+    Sprites::drawExternalMask(lion.getXDisplay(), lion.getYDisplay(), Images::Lion, Images::Lion_Mask, lion.getFrame(), lion.getFrame());
+
+    if (lion1.getRunning() && (lion.getXPosition() == XPosition::LH_Attacking_Up || lion.getXPosition() == XPosition::RH_Attacking_Up)) {
+        uint8_t frame = (arduboy.frameCount % 4 < 2);
+        Sprites::drawExternalMask(lion.getXDisplay(), lion.getYDisplay() + 24, Images::Lion_Cloud, Images::Lion_Cloud_Mask, frame, frame);
+
+    }
+
+}

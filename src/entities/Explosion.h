@@ -27,7 +27,7 @@ struct Explosion {
 
     public:
 
-        bool update(bool altFrame) {
+        void update(bool altFrame) {
 
             switch (this->counter) {
 
@@ -121,8 +121,6 @@ struct Explosion {
                     break;
 
             }
-
-            return this->counter == 121;
 
         }
 

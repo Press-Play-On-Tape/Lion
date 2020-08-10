@@ -39,7 +39,6 @@ void title() {
 
         case 11 ... 135:
             drawElements(false, 1);
-            // Sprites::drawExternalMask(52 + ((counter % 3) - 1), 6 + ((counter % 3) - 1), Images::Roar, Images::Roar_Mask, 0, 0);
             Sprites::drawOverwrite(52 + ((counter % 3) - 1), 6 + ((counter % 3) - 1), Images::Roar, 0);
             break;
 
@@ -57,7 +56,7 @@ void title() {
 
     // Render roar ..
 
-    for (uint8_t i = 0; i < 30; i++) {
+    for (uint8_t i = 0; i < Constants::Particle_Count; i++) {
 
         Explosion explosion = explosions.getExplosion(i);
         //arduboy.drawPixel(explosion.getX() + 1, explosion.getY() + 1, BLACK);
