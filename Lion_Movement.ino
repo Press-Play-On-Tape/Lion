@@ -393,8 +393,8 @@ void changeOneLevel(Lion &thisLion, Lion &otherLion, Direction newDirection) {
 
 void increaseScore() {
 
-    // sound.tones(Sounds::LionBlocked);
-    arduboy.setRGBled(GREEN_LED, 16);
+    sound.tones(Sounds::LionBlocked);
+    arduboy.setRGBled(GREEN_LED, Constants::LED_Brightness);
     ledDelay = Constants::Led_Delay;
     score++;
 
@@ -402,8 +402,8 @@ void increaseScore() {
 
 void die() {
 
-    // sound.tones(Sounds::LionEscaped);
-    arduboy.setRGBled(GREEN_LED, 16);
+    sound.tones(Sounds::LionEscaped);
+    arduboy.setRGBled(GREEN_LED, Constants::LED_Brightness);
     ledDelay = Constants::Led_Delay;
     numberOfLives--;
 

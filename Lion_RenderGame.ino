@@ -48,21 +48,25 @@ void renderPlayer(Player &player, const uint8_t *playerImages, const uint8_t *pl
     }
     else {
 
+        uint8_t frame = 0;
+
         switch (player.getXPosition()) {
 
             case XPosition::LH_Attacking_Up:
             case XPosition::RH_Attacking_Up:
-                Sprites::drawExternalMask(player.getXDisplay() + (player.getIndex() == Constants::Player2_Index ? 12 : 0), player.getYDisplay(), Images::Player_Up, Images::Player_Up_Mask, 0, 0);
+                frame = 0;
                 break;
 
             case XPosition::LH_Attacking_Down:
             case XPosition::RH_Attacking_Down:
-                Sprites::drawExternalMask(player.getXDisplay() + (player.getIndex() == Constants::Player2_Index ? 12 : 0), player.getYDisplay(), Images::Player_Down, Images::Player_Down_Mask, 0, 0);
+                frame = 2;
                 break;
 
             default: break;
 
         }
+
+        Sprites::drawExternalMask(player.getXDisplay() + (player.getIndex() == Constants::Player2_Index ? 12 : 0), player.getYDisplay(), Images::Player_Up_Down, Images::Player_Up_Down_Mask, frame, frame);
 
     }
 
@@ -72,7 +76,7 @@ void renderLion(Lion &lion) {
 
     Sprites::drawExternalMask(lion.getXDisplay(), lion.getYDisplay(), Images::Lion, Images::Lion_Mask, lion.getFrame(), lion.getFrame());
 
-    if (lion1.getRunning() && (lion.getXPosition() == XPosition::LH_Attacking_Up || lion.getXPosition() == XPosition::RH_Attacking_Up)) {
+    if (lion.getRunning() && (lion.getXPosition() == XPosition::LH_Attacking_Up || lion.getXPosition() == XPosition::RH_Attacking_Up)) {
         uint8_t frame = (arduboy.frameCount % 4 < 2);
         Sprites::drawExternalMask(lion.getXDisplay(), lion.getYDisplay() + 24, Images::Lion_Cloud, Images::Lion_Cloud_Mask, frame, frame);
 

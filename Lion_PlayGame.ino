@@ -84,8 +84,12 @@ void playGame(void) {
 
     // Handle lion movements ..
 
-    lion1.updateRunning();
-    lion2.updateRunning();
+    if (!gameOver) {
+
+        lion1.updateRunning();
+        lion2.updateRunning();
+
+    }
 
     if (counter == 0) {
 
@@ -109,9 +113,13 @@ void playGame(void) {
 
     // Player ..
 
-    player1.updateRunning();
-    player2.updateRunning();
+    if (!gameOver) {
 
+        player1.updateRunning();
+        player2.updateRunning();
+
+    }
+    
     renderPlayer(player1, Images::Player_01, Images::Player_01_Mask);
     renderPlayer(player2, Images::Player_02, Images::Player_02_Mask);
 
@@ -143,9 +151,10 @@ void playGame(void) {
 
         if (numberOfLives == 0) {
 
-            Sprites::drawExternalMask(24, 21, Images::GameOver, Images::GameOver_Mask, 0, 0);
-            player1.setRunning(false, XPosition::Centre);
-            player2.setRunning(false, XPosition::Centre);
+            Sprites::drawExternalMask(34, 24, Images::GameOver, Images::GameOver_Mask, 0, 0);
+            // player1.setRunning(false, XPosition::Centre);
+            // player2.setRunning(false, XPosition::Centre);
+            gameOver = true;
 
         }
         else {
@@ -185,7 +194,7 @@ void playGame(void) {
         }
      
         if (frame != 255) {
-            Sprites::drawExternalMask(52, 21, Images::Count, Images::Count_Mask, frame, 0);
+            Sprites::drawExternalMask(55, 24, Images::Count, Images::Count_Mask, frame, 0);
         }
 
     }

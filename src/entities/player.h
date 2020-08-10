@@ -75,7 +75,9 @@ struct Player {
             
             }
             else {
+
                 return this->xRunning;
+                
             }
 
         }

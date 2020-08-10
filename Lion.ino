@@ -24,7 +24,7 @@ int16_t counter = 10;
 uint16_t score = 0;
 uint8_t numberOfLives = 3;
 uint8_t ledDelay = 0;
-bool runScene = false;
+bool gameOver = false;
 
 void setup(void) {
 
@@ -52,7 +52,8 @@ void loop(void) {
             counter = -1;
             score = 0;
             numberOfLives = 3;
-            // sound.tones(Sounds::Title);
+            gameOver = false;
+            sound.tones(Sounds::Title);
             [[fallthrough]]
 
         case GameState::Title:
