@@ -25,6 +25,11 @@ struct Lion {
         uint8_t stepsOrig = 0;
         uint8_t index = 0;
 
+        bool running = false;
+        int8_t xRunning = 0;
+        int8_t yRunning = 0;
+        uint8_t runningCounter = 0;
+
     public:
 
         XPosition getXPosition()                    { return this->x; }
@@ -34,6 +39,7 @@ struct Lion {
         uint8_t getSpeed()                          { return this->speed; }
         uint8_t getSteps()                          { return this->steps; }
         uint8_t getIndex()                          { return this->index; }
+        bool getRunning()                           { return this->running; }
 
         void setXPosition(XPosition val)            { this->x = val; }
         void setYPosition(YPosition val)            { this->y = val; }
@@ -42,6 +48,7 @@ struct Lion {
         void setSpeed(uint8_t val)                  { this->speed = val; }
         void setSteps(uint8_t val)                  { this->steps = val; this->stepsOrig = val; }
         void setIndex(uint8_t val)                  { this->index = val; }
+        void setRunning(bool val)                   { this->xRunning = this->getXDisplay(); this->yRunning = this->getYDisplay(); this->runningCounter = 0; this->running = val;  }
 
     public:
 
@@ -50,9 +57,14 @@ struct Lion {
         void decYPosition()                         { if (this->y != YPosition::Level_1) this->y--; }
         void incYPosition()                         { if (this->y != YPosition::Level_3) this->y++; }
 
-        uint8_t getXDisplay() { 
+        int8_t getXDisplay() { 
         
-            return this->xPositions[static_cast<uint8_t>(this->y)][static_cast<uint8_t>(this->x)]; 
+            if (!this->getRunning()) {
+                return this->xPositions[static_cast<uint8_t>(this->y)][static_cast<uint8_t>(this->x)]; 
+            }
+            else {
+                return this->xRunning;
+            }
             
         }
         
@@ -93,20 +105,29 @@ struct Lion {
 
             const int8_t yPositions[] = { -4, 16, 37 };            
             
-            int8_t yPos = yPositions[static_cast<uint8_t>(this->y)]; 
+            if (!this->getRunning()) {
 
-            switch (this->direction) {
+                int8_t yPos = yPositions[static_cast<uint8_t>(this->y)]; 
 
-                case Direction::Up:
-                    yPos = yPos - ((this->stepsOrig - this->steps) * 7);
-                    return yPos;
+                switch (this->direction) {
 
-                case Direction::Down:
-                    yPos = yPos + ((this->stepsOrig - this->steps) * 7);
-                    return yPos;
+                    case Direction::Up:
+                        yPos = yPos - ((this->stepsOrig - this->steps) * 7);
+                        return yPos;
 
-                default:
-                    return yPos;
+                    case Direction::Down:
+                        yPos = yPos + ((this->stepsOrig - this->steps) * 7);
+                        return yPos;
+
+                    default:
+                        return yPos;
+
+                }
+
+            }
+            else {
+
+                return this->yRunning;
 
             }
         
@@ -149,6 +170,50 @@ struct Lion {
             this->setYPosition(yPosition);
             this->setIndex(index);   
             this->setSpeed(speed);
+            this->setRunning(false);
+
+        }
+
+        void updateRunning() {
+
+            if (!this->getRunning()) return;
+
+            switch (this->getXPosition()) {
+
+                case XPosition::LH_Attacking_Left:
+                    this->xRunning--;
+                    break;
+
+                case XPosition::LH_Attacking_Down:
+                    this->yRunning++;
+                    if (this->runningCounter == 6) this->xRunning--;
+                    break;
+
+                case XPosition::LH_Attacking_Up:
+                    this->yRunning--;
+                    if (this->runningCounter == 6) this->xRunning++;
+                    break;
+
+                case XPosition::RH_Attacking_Left:
+                    this->yRunning++;
+                    break;
+
+                case XPosition::RH_Attacking_Down:
+                    this->yRunning++;
+                    if (this->runningCounter == 6) this->xRunning++;
+                    break;
+
+                case XPosition::RH_Attacking_Up:
+                    this->yRunning--;
+                    if (this->runningCounter == 6) this->xRunning--;
+                    break;
+
+                default: break;
+
+            }
+
+            runningCounter++;
+            if (runningCounter == 7) runningCounter = 0;
 
         }
 

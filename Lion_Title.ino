@@ -39,7 +39,8 @@ void title() {
 
         case 11 ... 135:
             drawElements(false, 1);
-            Sprites::drawExternalMask(52 + ((counter % 3) - 1), 6 + ((counter % 3) - 1), Images::Roar, Images::Roar_Mask, 0, 0);
+            // Sprites::drawExternalMask(52 + ((counter % 3) - 1), 6 + ((counter % 3) - 1), Images::Roar, Images::Roar_Mask, 0, 0);
+            Sprites::drawOverwrite(52 + ((counter % 3) - 1), 6 + ((counter % 3) - 1), Images::Roar, 0);
             break;
 
         case 136 ... 145:

@@ -26,6 +26,7 @@ int16_t counter = 10;
 uint16_t score = 0;
 uint8_t numberOfLives = 3;
 uint8_t ledDelay = 0;
+bool runScene = false;
 
 void setup(void) {
 

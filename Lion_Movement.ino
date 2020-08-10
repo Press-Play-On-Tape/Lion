@@ -133,29 +133,31 @@ void moveLion(Lion &thisLion, Lion &otherLion) {
                     lionAttacking = Direction::Left;
                     lionAttackingIndex = thisLion.getIndex();
 
-                    if (!explosions.getExplosionSet()) {
+                    if (!thisLion.getRunning()) {
 
-                        int16_t y = 0;
+                        // int16_t y = 0;
 
-                        switch (thisLion.getXPosition()) {
+                        // switch (thisLion.getXPosition()) {
 
-                            case XPosition::LH_Attacking_Up:
-                                y = player1.getYDisplay() + 7;
-                                break;
+                        //     case XPosition::LH_Attacking_Up:
+                        //         y = player1.getYDisplay() + 7;
+                        //         break;
 
-                            case XPosition::LH_Attacking_Down:
-                                y = player1.getYDisplay() + 11;
-                                break;
+                        //     case XPosition::LH_Attacking_Down:
+                        //         y = player1.getYDisplay() + 11;
+                        //         break;
 
-                            case XPosition::LH_Attacking_Left:
-                                y = player1.getYDisplay() + 9;
-                                break;
+                        //     case XPosition::LH_Attacking_Left:
+                        //         y = player1.getYDisplay() + 9;
+                        //         break;
 
-                            default:    break;
+                        //     default:    break;
 
-                        }
+                        // }
 
-                        explosions.setExplosions(player1.getXDisplay() + 8, y);
+                        // explosions.setExplosions(player1.getXDisplay() + 8, y);
+                        player1.setRunning(true, thisLion.getXPosition());
+                        thisLion.setRunning(true);
                         die();
 
                     }
@@ -292,29 +294,30 @@ void moveLion(Lion &thisLion, Lion &otherLion) {
                     lionAttacking = Direction::Right;
                     lionAttackingIndex = thisLion.getIndex();
 
-                    if (!explosions.getExplosionSet()) {
+                    if (!thisLion.getRunning()) {
 
-                        int16_t y = 0;
+                        // int16_t y = 0;
 
-                        switch (thisLion.getXPosition()) {
+                        // switch (thisLion.getXPosition()) {
 
-                            case XPosition::RH_Attacking_Up:
-                                y = player2.getYDisplay() + 7;
-                                break;
+                        //     case XPosition::RH_Attacking_Up:
+                        //         y = player2.getYDisplay() + 7;
+                        //         break;
 
-                            case XPosition::RH_Attacking_Down:
-                                y = player2.getYDisplay() + 11;
-                                break;
+                        //     case XPosition::RH_Attacking_Down:
+                        //         y = player2.getYDisplay() + 11;
+                        //         break;
 
-                            case XPosition::RH_Attacking_Left:
-                                y = player1.getYDisplay() + 9;
-                                break;
+                        //     case XPosition::RH_Attacking_Left:
+                        //         y = player1.getYDisplay() + 9;
+                        //         break;
 
-                            default:    break;
+                        //     default:    break;
 
-                        }
+                        // }
 
-                        explosions.setExplosions(player2.getXDisplay() + 16, y);
+                        player2.setRunning(true, thisLion.getXPosition());
+                        thisLion.setRunning(true);
                         die();
                     }
 

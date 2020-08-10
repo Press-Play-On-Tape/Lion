@@ -30,33 +30,33 @@ void renderScoreBoards(uint16_t score, uint8_t numberOfLives) {
 
 }
 
-bool renderExplosion() {
+// bool renderExplosion() {
 
-    const uint8_t frame[] = { 0, 3, 3, 2, 2, 3, 3, 2, 2, 1, 1, 0, 0, 1, 1, 0, 0 };
+//     const uint8_t frame[] = { 0, 3, 3, 2, 2, 3, 3, 2, 2, 1, 1, 0, 0, 1, 1, 0, 0 };
 
-    bool anythingRendered = false;
-    uint8_t counter = explosions.getCounter();
+//     bool anythingRendered = false;
+//     uint8_t counter = explosions.getCounter();
 
-    for (uint8_t i= 0; i < 60; i++) {
+//     for (uint8_t i= 0; i < 60; i++) {
 
-        Explosion explosion = explosions.getExplosion(i);
+//         Explosion explosion = explosions.getExplosion(i);
         
-        if (explosion.render()) {
-//            arduboy.drawPixel(explosion.getX() + 1, explosion.getY() + 1, BLACK);
-//            Sprites::drawExternalMask(explosion.getX(), explosion.getY(), Images::Pixel, Images::Pixel_Mask, 0, 0);
-            Sprites::drawExternalMask(explosion.getX() + 1, explosion.getY(), Images::Pixel, Images::Pixel_Mask, 0, 0);
-            anythingRendered = true;
-        }
+//         if (explosion.render()) {
+// //            arduboy.drawPixel(explosion.getX() + 1, explosion.getY() + 1, BLACK);
+// //            Sprites::drawExternalMask(explosion.getX(), explosion.getY(), Images::Pixel, Images::Pixel_Mask, 0, 0);
+//             Sprites::drawExternalMask(explosion.getX() + 1, explosion.getY(), Images::Pixel, Images::Pixel_Mask, 0, 0);
+//             anythingRendered = true;
+//         }
 
-    }
+//     }
 
-    if (counter > 0 && counter <= 16)  {
+//     if (counter > 0 && counter <= 16)  {
 
-        Sprites::drawExternalMask(explosions.getX() - 8, explosions.getY() - 8, Images::Scrap, Images::Scrap_Mask, frame[counter], frame[counter]);
-        anythingRendered = true;
+//         Sprites::drawExternalMask(explosions.getX() - 8, explosions.getY() - 8, Images::Scrap, Images::Scrap_Mask, frame[counter], frame[counter]);
+//         anythingRendered = true;
 
-    }
+//     }
 
-    return anythingRendered;
+//     return anythingRendered;
 
-}
+// }
