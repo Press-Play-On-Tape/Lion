@@ -34,7 +34,7 @@ void setup(void) {
 	arduboy.systemButtons();
 	arduboy.audio.begin();
 	arduboy.initRandomSeed();
-	arduboy.setFrameRate(50);
+	arduboy.setFrameRate(40);
     arduboy.setRGBled(0, 0, 0);
 	
 }
@@ -53,7 +53,7 @@ void loop(void) {
             counter = -1;
             score = 0;
             numberOfLives = 3;
-            sound.tones(Sounds::Title);
+            // sound.tones(Sounds::Title);
             [[fallthrough]]
 
         case GameState::Title:
@@ -70,8 +70,8 @@ void loop(void) {
 
             playGame();
 
-            if (frameRate != 50 + (score / 8)) {
-                frameRate = 50 + (score / 8);
+            if (frameRate != 40 + (score / 8)) {
+                frameRate = 40 + (score / 8);
                 arduboy.setFrameRate(frameRate);
             }
             break;
