@@ -33,7 +33,7 @@ void title() {
             break;
 
         case 10:
-            explosions.setExplosionsTitle(35, 35);
+            explosions.setExplosions(35, 35);
             drawElements(true, 1);
             break;
 

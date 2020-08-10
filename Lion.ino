@@ -2,10 +2,7 @@
 #include <ArduboyTones.h>
 #include "src/images/Images.h"
 #include "src/utils/Consts.h"
-#include "src/entities/Player.h"
-#include "src/entities/Lion.h"
-#include "src/entities/Explosions.h"
-#include "src/entities/Explosion.h"
+#include "src/entities/Entities.h"
 #include "src/sounds/Sounds.h"
 
 Arduboy2Ext arduboy;
@@ -16,6 +13,7 @@ Player player2;
 Lion lion1;
 Lion lion2;
 Explosions explosions;
+Chair chair;
 
 Direction lionAttacking = Direction::None;
 uint8_t lionAttackingIndex = 0;
