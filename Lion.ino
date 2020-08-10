@@ -54,6 +54,7 @@ void loop(void) {
             numberOfLives = 3;
             gameOver = false;
             sound.tones(Sounds::Title);
+            explosions.reset();
             [[fallthrough]]
 
         case GameState::Title:

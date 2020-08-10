@@ -59,14 +59,14 @@ void renderPlayer(Player &player, const uint8_t *playerImages, const uint8_t *pl
 
             case XPosition::LH_Attacking_Down:
             case XPosition::RH_Attacking_Down:
-                frame = 2;
+                frame = 1;
                 break;
 
             default: break;
 
         }
 
-        Sprites::drawExternalMask(player.getXDisplay() + (player.getIndex() == Constants::Player2_Index ? 12 : 0), player.getYDisplay(), Images::Player_Up_Down, Images::Player_Up_Down_Mask, frame, frame);
+        Sprites::drawExternalMask(player.getXDisplay() + (player.getIndex() == Constants::Player2_Index ? 12 : 0), player.getYDisplay(), Images::Player_Up_Down, Images::Player_Up_Down_Mask, frame, 0);
 
     }
 
