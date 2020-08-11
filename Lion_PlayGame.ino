@@ -155,6 +155,7 @@ void playGame(void) {
             // player1.setRunning(false, XPosition::Centre);
             // player2.setRunning(false, XPosition::Centre);
             gameOver = true;
+            EEPROM_Utils::saveScore(score);
 
         }
         else {

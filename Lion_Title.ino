@@ -82,12 +82,27 @@ void title() {
                 break;
 
             case 20 ... 79:
+{
+
+    uint8_t digits[3] = {};
+    extractDigits(digits, score);
+    
+    for (uint8_t i = 3, x = 1; i > 0; i--, x = x + 4) {
+
+        Sprites::drawErase(x, 58, Images::Font, digits[i - 1]);
+
+    }
+
+}
                 Sprites::drawOverwrite(80, 54, Images::Mode, 0);
                 break;
 
             case 100 ... 159:
                 Sprites::drawOverwrite(80, 54, Images::Mode, 1);
                 break;
+
+
+                
 
         }
 

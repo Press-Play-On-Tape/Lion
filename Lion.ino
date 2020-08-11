@@ -2,6 +2,7 @@
 #include <ArduboyTones.h>
 #include "src/images/Images.h"
 #include "src/utils/Consts.h"
+#include "src/utils/EEPROM_Utils.h"
 #include "src/entities/Entities.h"
 #include "src/sounds/Sounds.h"
 
@@ -36,6 +37,8 @@ void setup(void) {
 	arduboy.initRandomSeed();
 	arduboy.setFrameRate(40);
     arduboy.setRGBled(0, 0, 0);
+
+    EEPROM_Utils::initEEPROM();
 	
 }
 
@@ -56,6 +59,7 @@ void loop(void) {
             gameOver = false;
             sound.tones(Sounds::Title);
             explosions.reset();
+            score = EEPROM_Utils::getScore();
             [[fallthrough]]
 
         case GameState::Title:
