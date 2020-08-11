@@ -4,7 +4,7 @@ void title() {
 
     if (counter >= 0) counter++;
     ledDelay++;
-    if (ledDelay == 160) ledDelay = 0;
+    if (ledDelay == 195) ledDelay = 0;
 
     Sprites::drawOverwrite(0, 0, Images::Title_LionTop, 0);
 
@@ -77,32 +77,34 @@ void title() {
 
         switch (ledDelay) {
 
-            case 0 ... 19:
-            case 80 ... 99:
+            case 0 ... 14:
+            case 65 ... 79:
+            case 130 ... 144:
                 break;
 
-            case 20 ... 79:
-{
-
-    uint8_t digits[3] = {};
-    extractDigits(digits, score);
-    
-    for (uint8_t i = 3, x = 1; i > 0; i--, x = x + 4) {
-
-        Sprites::drawErase(x, 58, Images::Font, digits[i - 1]);
-
-    }
-
-}
-                Sprites::drawOverwrite(80, 54, Images::Mode, 0);
+            case 15 ... 64:
+                Sprites::drawOverwrite(73, 54, Images::Mode, 0);
                 break;
 
-            case 100 ... 159:
-                Sprites::drawOverwrite(80, 54, Images::Mode, 1);
+            case 80 ... 129:
+                Sprites::drawOverwrite(73, 54, Images::Mode, 1);
                 break;
 
+            case 145 ... 194:
+                {
 
-                
+                    uint8_t digits[3] = {};
+                    extractDigits(digits, score);
+                    Sprites::drawOverwrite(72, 54, Images::Hard, 0);
+                    
+                    for (uint8_t i = 3, x = 88; i > 0; i--, x = x + 4) {
+
+                        Sprites::drawErase(x, 54, Images::Font, digits[i - 1]);
+
+                    }
+
+                }
+                break;
 
         }
 

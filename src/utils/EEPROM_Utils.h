@@ -40,9 +40,13 @@ void EEPROM_Utils::initEEPROM() {
 
         uint16_t score = 0;
 
-        EEPROM.update(EEPROM_START_C1, letter1);
-        EEPROM.update(EEPROM_START_C2, letter2);
-        EEPROM.update(EEPROM_TOP_START, score);
+        EEPROM.put(EEPROM_START_C1, letter1);
+        EEPROM.put(EEPROM_START_C2, letter2);
+        EEPROM.put(EEPROM_TOP_START, score);
+        Serial.println("overwrite");
+
+        EEPROM.get(EEPROM_TOP_START, score);
+        Serial.println(score);
 
     }
 
