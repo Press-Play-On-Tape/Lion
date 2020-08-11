@@ -57,16 +57,16 @@ void title() {
             drawElements(true, 1);
             break;
 
-        case 11 ... 135:
+        case 11 ... 120:
             drawElements(false, 1);
             Sprites::drawOverwrite(52 + ((counter % 3) - 1), 6 + ((counter % 3) - 1), Images::Roar, 0);
             break;
 
-        case 136 ... 145:
+        case 121 ... 130:
             drawElements(false, 1);
             break;
 
-        case 146:
+        case 131:
             drawElements(true, 0);
             gameState = GameState::PlayGame_Init;
             break;
@@ -110,18 +110,22 @@ void title() {
 
     }
 
+
     // Render roar ..
 
     for (uint8_t i = 0; i < Constants::Particle_Count; i++) {
 
         Explosion explosion = explosions.getExplosion(i);
-        //arduboy.drawPixel(explosion.getX() + 1, explosion.getY() + 1, BLACK);
-        //Sprites::drawExternalMask(explosion.getX(), explosion.getY(), Images::Pixel, Images::Pixel_Mask, 0, 0);
-        Sprites::drawExternalMask(explosion.getX() + 1, explosion.getY(), Images::Pixel, Images::Pixel_Mask, 0, 0);
+
+        if (explosion.getCounter() > 0) {
+            //arduboy.drawPixel(explosion.getX() + 1, explosion.getY() + 1, BLACK);
+            //Sprites::drawExternalMask(explosion.getX(), explosion.getY(), Images::Pixel, Images::Pixel_Mask, 0, 0);
+            Sprites::drawExternalMask(explosion.getX() + 1, explosion.getY(), Images::Pixel, Images::Pixel_Mask, 0, 0);
+        }
 
     }
 
-    explosions.update(random(0, 2));
+    explosions.update(arduboy.frameCount);
 
 }
 

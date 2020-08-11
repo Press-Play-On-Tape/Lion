@@ -29,8 +29,8 @@ struct Explosion {
 
         void update(uint16_t frame) {
 
-uint8_t frame2 = (frame % 2 == 0);
-uint8_t frame3 = (frame % 3 == 0);
+            uint8_t frame2 = (frame % 2 == 0);
+            uint8_t frame3 = (frame % 3 == 0);
 
             switch (this->counter) {
 

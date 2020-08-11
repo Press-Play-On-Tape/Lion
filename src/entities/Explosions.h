@@ -9,7 +9,7 @@ struct Explosions {
 
     private:
 
-        Explosion explosion[30];
+        Explosion explosion[Constants::Particle_Count];
         int16_t x = 0;
         int16_t y = 0;
 
@@ -31,20 +31,20 @@ struct Explosions {
 
             for (uint8_t i = 0; i < Constants::Particle_Count; i++) {
 
-                this->explosion[i].setX(x + ((i % 14) - 7));
-                this->explosion[i].setY(y + ((i % 14) - 7));
-                this->explosion[i].setCounter(-random(0, 32));
+                this->explosion[i].setX(x + (random(0, 14) - 7));
+                this->explosion[i].setY(y + (random(0, 14) - 7));
+                this->explosion[i].setCounter(-random(1, 32));
                 this->explosion[i].setDirection(random(0, 9));
                 
             }
 
         }
 
-        void update(bool altFrame) {
+        void update(uint16_t frame) {
 
             for (uint8_t i = 0; i < Constants::Particle_Count; i++) {
 
-                this->explosion[i].update(altFrame);
+                this->explosion[i].update(frame);
                 
             }
 
