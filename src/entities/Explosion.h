@@ -27,7 +27,10 @@ struct Explosion {
 
     public:
 
-        void update(bool altFrame) {
+        void update(uint16_t frame) {
+
+uint8_t frame2 = (frame % 2 == 0);
+uint8_t frame3 = (frame % 3 == 0);
 
             switch (this->counter) {
 
@@ -40,80 +43,48 @@ struct Explosion {
 
                     switch (this->direction) {
 
-                        case 0:                              // N
-                            this->y = this->y - 1;
+                        case 0:                              // NE
+                            this->x = this->x + 2;
+                            this->y = this->y - 2;
                             break;
 
-                        case 1:                              // NNE
-                            this->y = this->y - 1;
-                            if (altFrame) this->x = this->x + 1;
+                        case 1:                             
+                            if (frame2) this->y = this->y - 2;
+                            this->x = this->x + 2;
                             break;
 
-                        case 2:                              // NE
-                            this->x = this->x + 1;
-                            this->y = this->y - 1;
+                        case 2:                              // ENE
+                            if (frame3) this->y = this->y - 2;
+                            this->x = this->x + 2;
                             break;
 
-                        case 3:                              // ENE
-                            if (altFrame) this->y = this->y - 1;
-                            this->x = this->x + 1;
+                        case 3:                              
+                            if (frame2) this->y = this->y - 1;
+                            this->x = this->x + 2;
                             break;
 
                         case 4:                              // E
-                            this->x = this->x + 1;
+                            this->x = this->x + 2;
                             break;
 
-                        case 5:                              // ESE
-                            if (altFrame) this->y = this->y + 1;
-                            this->x = this->x + 1;
+                        case 5:                              // ENE
+                            if (frame2) this->y = this->y + 1;
+                            this->x = this->x + 2;
                             break;
 
-                        case 6:                              // SE
-                            this->x = this->x + 1;
-                            this->y = this->y + 1;
+                        case 6:                              // ESE
+                            if (frame3) this->y = this->y + 2;
+                            this->x = this->x + 2;
                             break;
 
-                        case 7:                              // SSE
-                            this->y = this->y + 1;
-                            if (altFrame) this->x = this->x + 1;
+                        case 7:                             
+                            if (frame2) this->y = this->y + 2;
+                            this->x = this->x + 2;
                             break;
 
-                        case 8:                              // S
-                            this->y = this->y + 1;
-                            break;
-
-                        case 9:                              // SSW
-                            this->y = this->y + 1;
-                            if (altFrame) this->x = this->x - 1;
-                            break;
-
-                        case 10:                             // SW
-                            this->x = this->x - 1;
-                            this->y = this->y + 1;
-                            break;
-
-                        case 11:                              // WSW
-                            if (altFrame) this->y = this->y + 1;
-                            this->x = this->x - 1;
-                            break;
-
-                        case 12:                             // W
-                            this->x = this->x - 1;
-                            break;
-
-                        case 13:                             // WNW
-                            if (altFrame) this->y = this->y - 1;
-                            this->x = this->x - 1;
-                            break;
-
-                        case 14:                             // NW
-                            this->x = this->x - 1;
-                            this->y = this->y - 1;
-                            break;
-
-                        case 15:                             // NNW
-                            this->y = this->y - 1;
-                            if (altFrame) this->x = this->x - 1;
+                        case 8:                              // SE
+                            this->x = this->x + 2;
+                            this->y = this->y + 2;
                             break;
 
                     }

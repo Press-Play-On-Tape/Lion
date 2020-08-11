@@ -34,7 +34,7 @@ struct Explosions {
                 this->explosion[i].setX(x + ((i % 14) - 7));
                 this->explosion[i].setY(y + ((i % 14) - 7));
                 this->explosion[i].setCounter(-random(0, 32));
-                this->explosion[i].setDirection(random(3, 6));
+                this->explosion[i].setDirection(random(0, 9));
                 
             }
 
