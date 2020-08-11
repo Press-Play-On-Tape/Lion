@@ -121,7 +121,7 @@ void playGame(void) {
     }
     
     renderPlayer(player1, Images::Player_01, Images::Player_01_Mask);
-    renderPlayer(player2, Images::Player_02, Images::Player_02_Mask);
+    if (gameMode == GameMode::Normal) renderPlayer(player2, Images::Player_02, Images::Player_02_Mask);
 
     if (!player1.getRunning() && !player2.getRunning()) {
 

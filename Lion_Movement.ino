@@ -184,32 +184,60 @@ void moveLion(Lion &thisLion, Lion &otherLion) {
                     break;
 
                 case XPosition::RH_Position4:
-
-                    if (player2.getYPosition() == thisLion.getYPosition()) {
-
+                    {
                         bool rnd = (random(0, 3) == 0);
 
-                        if (otherLion.getXPosition() <= XPosition::Centre && !otherLion.isMovingUpDown() && rnd) {
+                        if (gameMode == GameMode::Normal) {
 
-                            changeLevel(thisLion, otherLion, Direction::Left);
+                            if (player2.getYPosition() == thisLion.getYPosition()) {
 
-                        }
-                        else if (otherLion.getYPosition() != YPosition::Level_2 && !otherLion.isMovingUpDown() && rnd) {
+                                
 
-                            changeOneLevel(thisLion, otherLion, Direction::Left);
+                                if (otherLion.getXPosition() <= XPosition::Centre && !otherLion.isMovingUpDown() && rnd) {
+
+                                    changeLevel(thisLion, otherLion, Direction::Left);
+
+                                }
+                                else if (otherLion.getYPosition() != YPosition::Level_2 && !otherLion.isMovingUpDown() && rnd) {
+
+                                    changeOneLevel(thisLion, otherLion, Direction::Left);
+
+                                }
+                                else {
+
+                                    thisLion.incXPosition();
+                                    increaseScore();
+
+                                }
+
+                            }
+                            else {
+
+                                thisLion.incXPosition();
+
+                            }
 
                         }
                         else {
 
-                            thisLion.incXPosition();
-                            increaseScore();
+                            if (otherLion.getXPosition() <= XPosition::Centre && !otherLion.isMovingUpDown() && rnd) {
+
+                                changeLevel(thisLion, otherLion, Direction::Left);
+
+                            }
+                            else if (otherLion.getYPosition() != YPosition::Level_2 && !otherLion.isMovingUpDown() && rnd) {
+
+                                changeOneLevel(thisLion, otherLion, Direction::Left);
+
+                            }
+                            else {
+
+                                thisLion.decXPosition();
+                                thisLion.setDirection(Direction::Left);
+
+                            }
 
                         }
-
-                    }
-                    else {
-
-                        thisLion.incXPosition();
 
                     }
 

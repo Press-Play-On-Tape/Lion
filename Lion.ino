@@ -18,6 +18,7 @@ Chair chair;
 Direction lionAttacking = Direction::None;
 uint8_t lionAttackingIndex = 0;
 GameState gameState = GameState::Title_Init;
+GameMode gameMode = GameMode::Easy;
 
 uint8_t frameRate = 50;
 int16_t counter = 10;

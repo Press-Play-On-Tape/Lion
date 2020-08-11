@@ -3,6 +3,8 @@
 void title() {
 
     if (counter >= 0) counter++;
+    ledDelay++;
+    if (ledDelay == 160) ledDelay = 0;
 
     Sprites::drawOverwrite(0, 0, Images::Title_LionTop, 0);
 
@@ -16,6 +18,24 @@ void title() {
         }
         else {
 
+            gameMode = GameMode::Easy;
+            gameState = GameState::PlayGame_Init;
+
+        }
+
+    }
+
+    if (arduboy.justPressed(B_BUTTON)) { 
+        
+        if (counter == -1) {
+
+            counter = 0;
+            //sound.tones(Sounds::Roar);
+
+        }
+        else {
+
+            gameMode = GameMode::Normal;
             gameState = GameState::PlayGame_Init;
 
         }
@@ -53,6 +73,25 @@ void title() {
 
     }
 
+    if (counter < 0) {
+
+        switch (ledDelay) {
+
+            case 0 ... 19:
+            case 80 ... 99:
+                break;
+
+            case 20 ... 79:
+                Sprites::drawOverwrite(80, 54, Images::Mode, 0);
+                break;
+
+            case 100 ... 159:
+                Sprites::drawOverwrite(80, 54, Images::Mode, 1);
+                break;
+
+        }
+
+    }
 
     // Render roar ..
 
@@ -71,7 +110,7 @@ void title() {
 
 void drawElements(bool title, uint8_t lionFrame) {
 
-    if (title) Sprites::drawOverwrite(50, 12, Images::Title, 0);
+    if (title) Sprites::drawOverwrite(50, 10, Images::Title, 0);
     Sprites::drawOverwrite(0, 32, Images::Title_Lion_Bottom, lionFrame);
 
 }
