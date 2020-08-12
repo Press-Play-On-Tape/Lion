@@ -24,5 +24,11 @@ namespace Sounds {
         TONES_END
     };
 
+    const uint16_t Roar[] PROGMEM = {
+        NOTE_B1, 10, NOTE_E1, 10, NOTE_B1, 10, NOTE_E1, 10, NOTE_B1, 10, NOTE_E1, 10, NOTE_B1, 10, NOTE_E1, 10, 
+        NOTE_B1, 10, NOTE_E1, 10, NOTE_B1, 10, NOTE_E1, 10, NOTE_B1, 10, NOTE_E1, 10, NOTE_B1, 10, NOTE_E1, 10, 
+        TONES_END
+    };
+
 }
 
