@@ -120,7 +120,7 @@ void moveLion(Lion &thisLion, Lion &otherLion) {
                     }
                     else {
 
-                        thisLion.setXPosition(XPosition::LH_Attacking_Left);
+                        thisLion.setXPosition(XPosition::LH_Attacking_Down);
 
                     }
 
@@ -289,7 +289,7 @@ void moveLion(Lion &thisLion, Lion &otherLion) {
                     }
                     else {
 
-                        thisLion.setXPosition(XPosition::RH_Attacking_Left);
+                        thisLion.setXPosition(XPosition::RH_Attacking_Down);
 
                     }
 

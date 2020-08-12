@@ -6,7 +6,7 @@
 
 struct Lion {
 
-    // 0 = LH0, 1 = LH1, 2 = LHA, 3 = RH0, 4 = RH1, 5 = RHA, 6 = FWD, 7 = BWD
+    // Images                               0 = LH0, 1 = LH1, 2 = LHA, 3 = RH0, 4 = RH1, 5 = RHA, 6 = FWD, 7 = BWD
     //                                     AL  AD  AU  AT  OC  AT   4   3   2   1     C     1   2   3   4  AT  OC  AT  AU  AD  AL
     const uint8_t xPositions[3][21] =   {{ 12, 12, 12, 36, 38, 40, 42, 44, 46, 48,   52,   56, 58, 60, 62, 64, 66, 90, 90, 90, 90 },
                                          {  8,  8,  8, 30, 33, 36, 39, 42, 45, 48,   52,   56, 59, 62, 67, 68, 71, 74, 94, 94, 94 },
@@ -29,6 +29,7 @@ struct Lion {
         int8_t xRunning = 0;
         int8_t yRunning = 0;
         uint8_t runningCounter = 0;
+        uint8_t runningDelay = 0;
 
     public:
 
@@ -40,6 +41,7 @@ struct Lion {
         uint8_t getSteps()                          { return this->steps; }
         uint8_t getIndex()                          { return this->index; }
         bool getRunning()                           { return this->running; }
+        bool getRunningDelay()                      { return this->runningDelay; }
 
         void setXPosition(XPosition val)            { this->x = val; }
         void setYPosition(YPosition val)            { this->y = val; }
@@ -48,7 +50,7 @@ struct Lion {
         void setSpeed(uint8_t val)                  { this->speed = val; }
         void setSteps(uint8_t val)                  { this->steps = val; this->stepsOrig = val; }
         void setIndex(uint8_t val)                  { this->index = val; }
-        void setRunning(bool val)                   { this->xRunning = this->getXDisplay(); this->yRunning = this->getYDisplay(); this->runningCounter = 0; this->running = val;  }
+        void setRunningDelay(uint8_t val)           { this->runningDelay = val; }
 
     public:
 
@@ -56,6 +58,16 @@ struct Lion {
         void incXPosition()                         { this->x++; }
         void decYPosition()                         { if (this->y != YPosition::Level_1) this->y--; }
         void incYPosition()                         { if (this->y != YPosition::Level_3) this->y++; }
+
+        void setRunning(bool val) { 
+            
+            this->xRunning = this->getXDisplay(); 
+            this->yRunning = this->getYDisplay(); 
+            this->runningCounter = 0; 
+            this->running = val; 
+            this->runningDelay = 16;  
+            
+        }
 
         int8_t getXDisplay() { 
         
@@ -155,10 +167,15 @@ struct Lion {
 
         }
 
-
         bool isMovingUpDown() {
 
             return this->direction == Direction::Up || this->direction == Direction::Down;
+
+        }
+
+        bool isAttacking() {
+
+            return (this->x < XPosition::LH_Attacking || this->x > XPosition::RH_Attacking);
 
         }
 
@@ -171,12 +188,19 @@ struct Lion {
             this->setIndex(index);   
             this->setSpeed(speed);
             this->setRunning(false);
+            this->setRunningDelay(0);
 
         }
 
         void updateRunning() {
 
             if (!this->getRunning()) return;
+
+            if (this->getRunningDelay() > 0) {
+
+                this->runningDelay--;
+                return;
+            }
 
             switch (this->getXPosition()) {
 
