@@ -75,7 +75,7 @@ void moveLion(Lion &thisLion, Lion &otherLion) {
 
                 case XPosition::LH_Attack: 
 
-                    if (player1.getYPosition() == thisLion.getYPosition() && random(0, 2) == 0) {
+                    if (player1.getYPosition() == thisLion.getYPosition() && random(0, 2) == 0 && otherLion.getXPosition() > XPosition::LH_Attack) {
 
                         thisLion.incXPosition();
                         thisLion.setDirection(Direction::Right);
@@ -245,7 +245,7 @@ void moveLion(Lion &thisLion, Lion &otherLion) {
 
                 case XPosition::RH_Attack: 
 
-                    if (player2.getYPosition() == thisLion.getYPosition() && random(0, 2) == 0) {
+                    if (player2.getYPosition() == thisLion.getYPosition() && random(0, 2) == 0 && otherLion.getXPosition() < XPosition::RH_Attack) {
 
                         thisLion.decXPosition();
                         thisLion.setDirection(Direction::Left);
@@ -421,7 +421,9 @@ void changeOneLevel(Lion &thisLion, Lion &otherLion, Direction newDirection) {
 
 void increaseScore() {
 
+    #ifdef SOUNDS
     sound.tones(Sounds::LionBlocked);
+    #endif
     arduboy.setRGBled(GREEN_LED, Constants::LED_Brightness);
     ledDelay = Constants::Led_Delay;
     score++;
@@ -430,7 +432,9 @@ void increaseScore() {
 
 void die() {
 
+    #ifdef SOUNDS
     sound.tones(Sounds::LionEscaped);
+    #endif
     arduboy.setRGBled(GREEN_LED, Constants::LED_Brightness);
     ledDelay = Constants::Led_Delay;
     numberOfLives--;

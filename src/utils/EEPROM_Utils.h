@@ -16,6 +16,7 @@ class EEPROM_Utils {
     static void initEEPROM();
     static uint16_t getScore();
     static void saveScore(uint16_t score);
+    static bool toggleSoundSettings(Arduboy2Ext &arduboy);
 
 };
 
@@ -79,4 +80,27 @@ void EEPROM_Utils::saveScore(uint16_t score) {
 
     }
 
+}
+
+
+/* ----------------------------------------------------------------------------
+ *  Toggle the sound setting and commit to the EEPROM.
+ */
+bool EEPROM_Utils::toggleSoundSettings(Arduboy2Ext &arduboy) {
+
+    if (arduboy.audio.enabled()) {
+
+        arduboy.audio.off(); 
+        arduboy.audio.saveOnOff();
+        return false;
+
+    }
+    else {
+
+        arduboy.audio.on(); 
+        arduboy.audio.saveOnOff();
+        return true;
+
+    }
+    
 }

@@ -2,11 +2,20 @@
 
 #pragma once
 
+#define SOUNDS
+#define SPLASH
 
 enum class GameState : uint8_t {
 
+    #ifdef SPLASH
+        Splash_Init,
+        Splash,
+    #endif
+
     Title_Init,
     Title,
+    Instructions_Init,
+    Instructions,
     PlayGame_Init,
     PlayGame
 

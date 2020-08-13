@@ -3,23 +3,27 @@
 void title() {
 
     if (counter >= 0) counter++;
-    ledDelay++;
-    if (ledDelay == 195) ledDelay = 0;
+    if (soundCounter > 0) soundCounter--;
+    marqueeCounter++; 
+    if (marqueeCounter == 195) marqueeCounter = 0;
 
     Sprites::drawOverwrite(0, 0, Images::Title_LionTop, 0);
 
     if (arduboy.justPressed(A_BUTTON)) { 
+
+        gameMode = GameMode::Easy;
         
         if (counter == -1) {
 
             counter = 0;
-            //sound.tones(Sounds::Roar);
+            #ifdef SOUNDS
+            sound.tones(Sounds::Roar);
+            #endif
 
         }
         else {
 
-            gameMode = GameMode::Easy;
-            gameState = GameState::PlayGame_Init;
+            gameState = GameState::Instructions_Init;
 
         }
 
@@ -27,19 +31,29 @@ void title() {
 
     if (arduboy.justPressed(B_BUTTON)) { 
         
+        gameMode = GameMode::Normal;
+
         if (counter == -1) {
 
             counter = 0;
-            //sound.tones(Sounds::Roar);
+            #ifdef SOUNDS
+            sound.tones(Sounds::Roar);
+            #endif
 
         }
         else {
 
-            gameMode = GameMode::Normal;
-            gameState = GameState::PlayGame_Init;
+            gameState = GameState::Instructions_Init;
 
         }
 
+    }
+
+    if (arduboy.justPressed(UP_BUTTON) || arduboy.justPressed(DOWN_BUTTON)) {
+
+        sounds = EEPROM_Utils::toggleSoundSettings(arduboy);
+        soundCounter = 16;
+        
     }
 
     switch (counter) {
@@ -68,14 +82,14 @@ void title() {
 
         case 131:
             drawElements(true, 0);
-            gameState = GameState::PlayGame_Init;
+            gameState = GameState::Instructions_Init;
             break;
 
     }
 
     if (counter < 0) {
 
-        switch (ledDelay) {
+        switch (marqueeCounter) {
 
             case 0 ... 14:
             case 65 ... 79:
@@ -110,6 +124,12 @@ void title() {
 
     }
 
+    if (soundCounter > 0) {
+
+        Sprites::drawOverwrite(119, 55, Images::Sound, !sounds);
+
+    }
+
 
     // Render roar ..
 
@@ -118,8 +138,6 @@ void title() {
         Explosion explosion = explosions.getExplosion(i);
 
         if (explosion.getCounter() > 0) {
-            //arduboy.drawPixel(explosion.getX() + 1, explosion.getY() + 1, BLACK);
-            //Sprites::drawExternalMask(explosion.getX(), explosion.getY(), Images::Pixel, Images::Pixel_Mask, 0, 0);
             Sprites::drawExternalMask(explosion.getX() + 1, explosion.getY(), Images::Pixel, Images::Pixel_Mask, 0, 0);
         }
 

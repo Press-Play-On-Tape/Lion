@@ -18,7 +18,13 @@ Chair chair;
 
 Direction lionAttacking = Direction::None;
 uint8_t lionAttackingIndex = 0;
+
+#ifdef SPLASH
+GameState gameState = GameState::Splash_Init;
+#else
 GameState gameState = GameState::Title_Init;
+#endif
+
 GameMode gameMode = GameMode::Easy;
 
 uint8_t frameRate = 50;
@@ -26,7 +32,12 @@ int16_t counter = 10;
 uint16_t score = 0;
 uint8_t numberOfLives = 3;
 uint8_t ledDelay = 0;
+uint8_t marqueeCounter = 0;
+uint8_t soundCounter = 0;
+
 bool gameOver = false;
+bool sounds = arduboy.audio.enabled();
+
 
 void setup(void) {
 
@@ -50,14 +61,45 @@ void loop(void) {
 
     switch (gameState) {
 
+        #ifdef SPLASH
+
+            case GameState::Splash_Init:
+
+                splashScreen_Init();
+                gameState = GameState::Splash;
+                [[fallthrough]]
+
+            case GameState::Splash:
+
+                splashScreen();
+                arduboy.display();
+                break;
+        #endif
+
+        case GameState::Instructions_Init:
+            instructions_Init();
+            gameState = GameState::Instructions;
+            [[fallthrough]]
+
+        case GameState::Instructions:
+            instructions();
+            arduboy.displayClearToWhite();
+            break;
+
         case GameState::Title_Init:
 
             gameState = GameState::Title;
             counter = -1;
+            marqueeCounter = 0;
+            soundCounter = 0;
             score = 0;
             numberOfLives = 3;
             gameOver = false;
+            arduboy.setFrameRate(40);
+
+            #ifdef SOUNDS
             sound.tones(Sounds::Title);
+            #endif
             explosions.reset();
             score = EEPROM_Utils::getScore();
             [[fallthrough]]
@@ -65,6 +107,7 @@ void loop(void) {
         case GameState::Title:
 
             title();
+            arduboy.displayClearToWhite();
             break;
 
         case GameState::PlayGame_Init:
@@ -80,12 +123,11 @@ void loop(void) {
                 frameRate = 40 + (score / 8);
                 arduboy.setFrameRate(frameRate);
             }
+            arduboy.displayClearToWhite();
             break;
 
     }
 
-
-    arduboy.displayClearToWhite();
 
 }
 
