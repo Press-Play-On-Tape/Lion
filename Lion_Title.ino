@@ -268,7 +268,7 @@ void drawElements(bool title, uint8_t lionFrame) {
 
     void makeRoar() {
 
-        beep.tone(soundVars.note, 5);
+        beep.tone(5, soundVars.note);
         delay(soundVars.duration);
         beep.noTone();
         delay(soundVars.duration/3);
