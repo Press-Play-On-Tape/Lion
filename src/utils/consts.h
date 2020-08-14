@@ -4,6 +4,35 @@
 
 #define SOUNDS
 #define SPLASH
+#define _THREE_IMAGES
+#define SHOW_INSTUCTIONS
+#define SHOW_ROAR
+
+struct SoundVars {
+
+    int note = 180;
+    int delta = 1;
+    int maximum = 201;
+    int minimum = 180;
+
+    int duration = 44;
+    bool up = true;
+    bool down = false;
+
+    void reset() {
+
+        this->note = 180;
+        this->delta = 1;
+        this->maximum = 201;
+        this->minimum = 180;
+
+        this->duration = 44;
+        this->up = true;
+        this->down = false;
+
+    }
+
+};
 
 enum class GameState : uint8_t {
 
@@ -14,8 +43,12 @@ enum class GameState : uint8_t {
 
     Title_Init,
     Title,
-    Instructions_Init,
-    Instructions,
+
+    #ifdef SHOW_INSTUCTIONS
+        Instructions_Init,
+        Instructions,
+    #endif
+
     PlayGame_Init,
     PlayGame
 
