@@ -57,7 +57,7 @@ enum class GameState : uint8_t {
 enum class GameMode : uint8_t {
 
     Easy,
-    Normal,
+    Hard,
 
 };
 

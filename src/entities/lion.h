@@ -59,13 +59,13 @@ struct Lion {
         void decYPosition()                         { if (this->y != YPosition::Level_1) this->y--; }
         void incYPosition()                         { if (this->y != YPosition::Level_3) this->y++; }
 
-        void setRunning(bool val) { 
+        void setRunning(bool val, bool includeDelay) { 
             
             this->xRunning = this->getXDisplay(); 
             this->yRunning = this->getYDisplay(); 
             this->runningCounter = 0; 
             this->running = val; 
-            this->runningDelay = 16;  
+            this->runningDelay = includeDelay ? 16 : 0;  
             
         }
 
@@ -187,7 +187,7 @@ struct Lion {
             this->setYPosition(yPosition);
             this->setIndex(index);   
             this->setSpeed(speed);
-            this->setRunning(false);
+            this->setRunning(false, false);
             this->setRunningDelay(0);
 
         }

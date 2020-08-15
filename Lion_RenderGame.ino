@@ -1,5 +1,9 @@
 #include <Arduboy2.h>
 
+
+// ----------------------------------------------------------------------------
+//  Render background ..
+//
 void renderBackground() {
 
     Sprites::drawOverwrite(0, 0, Images::Scenery_LH, 0);
@@ -15,6 +19,10 @@ void renderBackground() {
 
 }
 
+
+// ----------------------------------------------------------------------------
+//  Render scoreboards ..
+//
 void renderScoreBoards(uint16_t score, uint8_t numberOfLives) {
 
     Sprites::drawOverwrite(-1, 56, Images::Scoreboard_LH, 0);
@@ -37,6 +45,10 @@ void renderScoreBoards(uint16_t score, uint8_t numberOfLives) {
 
 }
 
+
+// ----------------------------------------------------------------------------
+//  Render player ..
+//
 void renderPlayer(Player &player, const uint8_t *playerImages, const uint8_t *playerMask) {
 
     uint8_t playerFrame = 0;
@@ -79,6 +91,11 @@ void renderPlayer(Player &player, const uint8_t *playerImages, const uint8_t *pl
 
 }
 
+
+
+// ----------------------------------------------------------------------------
+//  Render lion ..
+//
 void renderLion(Lion &lion) {
 
     Sprites::drawExternalMask(lion.getXDisplay(), lion.getYDisplay(), Images::Lion, Images::Lion_Mask, lion.getFrame(), lion.getFrame());

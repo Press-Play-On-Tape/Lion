@@ -94,7 +94,7 @@ void loop(void) {
                 splashScreen();
                 arduboy.display();
                 break;
-                
+
         #endif
 
         #ifdef SHOW_INSTUCTIONS
@@ -118,8 +118,7 @@ void loop(void) {
             marqueeCounter = 0;
             numberOfLives = 3;
             gameOver = false;
-            arduboy.setFrameRate(40);
-            score = EEPROM_Utils::getScore();
+            arduboy.setFrameRate(60);
 
             #ifdef SOUNDS
                 soundCounter = 0;
@@ -139,6 +138,7 @@ void loop(void) {
 
         case GameState::PlayGame_Init:
 
+            arduboy.setFrameRate(40);
             playGame_Init();
             score = 0;
             [[fallthrough]]

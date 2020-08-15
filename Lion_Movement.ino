@@ -1,5 +1,9 @@
 #include <Arduboy2.h>
 
+
+// ----------------------------------------------------------------------------
+//  Mpve the a lion relative to the grid and the other lion ..
+//
 void moveLion(Lion &thisLion, Lion &otherLion) {
 
     // Handle lion moves ..
@@ -137,7 +141,7 @@ void moveLion(Lion &thisLion, Lion &otherLion) {
 
                         player1.setRunning(true, thisLion.getXPosition());
                         chair.setPosition(player1.getXDisplay() + 14, player1.getYDisplay() + 2, Direction::Left);
-                        thisLion.setRunning(true);
+                        thisLion.setRunning(true, player1.getYPosition() == thisLion.getYPosition());
                         die();
 
                     }
@@ -187,7 +191,7 @@ void moveLion(Lion &thisLion, Lion &otherLion) {
                     {
                         bool rnd = (random(0, 3) == 0);
 
-                        if (gameMode == GameMode::Normal) {
+                        if (gameMode == GameMode::Hard) {
 
                             if (player2.getYPosition() == thisLion.getYPosition()) {
 
@@ -306,7 +310,7 @@ void moveLion(Lion &thisLion, Lion &otherLion) {
 
                         player2.setRunning(true, thisLion.getXPosition());
                         chair.setPosition(player2.getXDisplay(), player2.getYDisplay() + 2, Direction::Right);
-                        thisLion.setRunning(true);
+                        thisLion.setRunning(true, player1.getYPosition() == thisLion.getYPosition());
                         die();
 
                     }
@@ -328,6 +332,10 @@ void moveLion(Lion &thisLion, Lion &otherLion) {
 
 }
 
+
+// ----------------------------------------------------------------------------
+//  Mve the lion one or two levels up or down ..
+//
 void changeLevel(Lion &thisLion, Lion &otherLion, Direction newDirection) {
 
     switch (thisLion.getYPosition()) {
@@ -401,6 +409,10 @@ void changeLevel(Lion &thisLion, Lion &otherLion, Direction newDirection) {
 
 }
 
+
+// ----------------------------------------------------------------------------
+//  Mve the lion one level up or down ..
+//
 void changeOneLevel(Lion &thisLion, Lion &otherLion, Direction newDirection) {
 
     thisLion.setSteps(3);
@@ -419,6 +431,10 @@ void changeOneLevel(Lion &thisLion, Lion &otherLion, Direction newDirection) {
 
 }
 
+
+// ----------------------------------------------------------------------------
+//  Increase the score ..
+//
 void increaseScore() {
 
     #ifdef SOUNDS
@@ -430,6 +446,10 @@ void increaseScore() {
 
 }
 
+
+// ----------------------------------------------------------------------------
+//  Handle a player dead ..
+//
 void die() {
 
     #ifdef SOUNDS

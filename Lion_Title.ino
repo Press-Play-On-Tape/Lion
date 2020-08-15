@@ -13,59 +13,24 @@ void title() {
         if (marqueeCounter == 195) marqueeCounter = 0;
     #else
         marqueeCounter++; 
-        if (marqueeCounter == 130) marqueeCounter = 0;
+        if (marqueeCounter == 166) marqueeCounter = 0;
     #endif
 
     Sprites::drawOverwrite(0, 0, Images::Title_LionTop, 0);
 
-    if (arduboy.justPressed(A_BUTTON)) { 
+    if (arduboy.justPressed(A_BUTTON) || arduboy.justPressed(B_BUTTON)) { 
 
-        gameMode = GameMode::Easy;
+        gameMode = arduboy.justPressed(A_BUTTON) ? GameMode::Easy : GameMode::Hard;
 
         #ifdef SHOW_ROAR
             
             if (counter == -1) {
 
+                #ifdef SOUNDS
+                    sound.noTone();
+                #endif
                 counter = 0;
                 
-                #ifdef SOUNDS
-                    soundVars.reset();
-                #endif
-
-            }
-            else {
-
-                #ifdef SHOW_INSTUCTIONS
-                    gameState = GameState::Instructions_Init;
-                #else
-                    gameState = GameState::PlayGame_Init;
-                #endif
-
-            }
-
-        #else
-
-            #ifdef SHOW_INSTUCTIONS
-                gameState = GameState::Instructions_Init;
-            #else
-                gameState = GameState::PlayGame_Init;
-            #endif
-
-            counter = 131;
-
-        #endif
-
-    }
-
-    if (arduboy.justPressed(B_BUTTON)) { 
-        
-        gameMode = GameMode::Normal;
-
-        #ifdef SHOW_ROAR
-
-            if (counter == -1) {
-
-                counter = 0;
                 #ifdef SOUNDS
                     soundVars.reset();
                 #endif
@@ -121,7 +86,27 @@ void title() {
                 drawElements(true, 1);
                 break;
 
-            case 11 ... 120:
+            case 11 ... 61:
+
+                #ifdef SOUNDS
+                    makeRoar();
+                #endif
+
+                drawElements(false, 1);
+                Sprites::drawOverwrite(52 + ((counter % 3) - 1), 6 + ((counter % 3) - 1), Images::Roar, 0);
+                break;
+
+            case 62:
+
+                #ifdef SOUNDS
+                    beep.noTone();
+                #endif
+
+                drawElements(false, 1);
+                Sprites::drawOverwrite(52 + ((counter % 3) - 1), 6 + ((counter % 3) - 1), Images::Roar, 0);
+                break;
+
+            case 63 ... 120:
                 drawElements(false, 1);
                 Sprites::drawOverwrite(52 + ((counter % 3) - 1), 6 + ((counter % 3) - 1), Images::Roar, 0);
                 break;
@@ -140,16 +125,6 @@ void title() {
                 break;
 
         }
-
-        #ifdef SOUNDS
-
-            if (counter >= 10 && counter < 60) {
-
-                makeRoar();
-
-            }
-
-        #endif
 
     #else
         drawElements(true, 0);
@@ -197,22 +172,29 @@ void title() {
             switch (marqueeCounter) {
 
                 case 0 ... 14:
-                case 65 ... 79:
+                case 85 ... 99:
                     break;
 
-                case 15 ... 64:
+                case 15 ... 84:
                     Sprites::drawOverwrite(59, 54, Images::Mode, 0);
                     Sprites::drawOverwrite(88, 54, Images::Mode, 1);
                     break;
 
-                case 80 ... 129:
+                case 100 ... 165:
                     {
 
                         uint8_t digits[3] = {};
-                        extractDigits(digits, score);
-                        Sprites::drawOverwrite(72, 54, Images::Hard, 0);
+                        Sprites::drawOverwrite(64, 54, Images::High, 0);
                         
-                        for (uint8_t i = 3, x = 88; i > 0; i--, x = x + 4) {
+                        extractDigits(digits, EEPROM_Utils::getScore(GameMode::Easy));
+                        for (uint8_t i = 3, x = 81; i > 0; i--, x = x + 4) {
+
+                            Sprites::drawErase(x, 54, Images::Font, digits[i - 1]);
+
+                        }
+                        
+                        extractDigits(digits, EEPROM_Utils::getScore(GameMode::Hard));
+                        for (uint8_t i = 3, x = 96; i > 0; i--, x = x + 4) {
 
                             Sprites::drawErase(x, 54, Images::Font, digits[i - 1]);
 
@@ -228,11 +210,11 @@ void title() {
     }
 
     #ifdef SOUNDS
+
         if (soundCounter > 0) {
-
             Sprites::drawOverwrite(119, 55, Images::Sound, !sounds);
-
         }
+
     #endif
 
 
@@ -268,10 +250,10 @@ void drawElements(bool title, uint8_t lionFrame) {
 
     void makeRoar() {
 
-        beep.tone(5, soundVars.note);
-        delay(soundVars.duration);
-        beep.noTone();
-        delay(soundVars.duration/3);
+        beep.tone(soundVars.note, 5);
+        //delay(soundVars.duration);
+        //beep.noTone();
+        //delay(soundVars.duration/3);
 
         soundVars.note += soundVars.delta;
 

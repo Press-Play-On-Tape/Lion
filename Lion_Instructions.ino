@@ -1,5 +1,8 @@
 
 
+// ----------------------------------------------------------------------------
+//  Initialise iinstruction screen ..
+//
 void instructions_Init() {
 
     ledDelay = 0;
@@ -7,6 +10,10 @@ void instructions_Init() {
 
 }
 
+
+// ----------------------------------------------------------------------------
+//  Render instructoin screen ..
+//
 void instructions() {
 
     const uint8_t xCoord[53] = {  26, 28, 30, 32,   34, 36, 38, 40,   42, 44, 46, 48,   50, 52, 54, 56,   

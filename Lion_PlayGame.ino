@@ -1,5 +1,10 @@
 #include <Arduboy2.h>
 
+
+
+// ----------------------------------------------------------------------------
+//  Initialise game ..
+//
 void playGame_Init() {
 
     lifeReset();
@@ -13,6 +18,10 @@ void playGame_Init() {
 
 }
 
+
+// ----------------------------------------------------------------------------
+//  Reset life at start of game and after each death ..
+//
 void lifeReset() {
 
     chair.reset();
@@ -28,6 +37,10 @@ void lifeReset() {
 
 }
 
+
+// ----------------------------------------------------------------------------
+//  Update game and render ..
+//
 void playGame(void) {
 
     uint8_t justPressedButton = arduboy.justPressedButtons();
@@ -121,7 +134,7 @@ void playGame(void) {
     }
     
     renderPlayer(player1, Images::Player_01, Images::Player_01_Mask);
-    if (gameMode == GameMode::Normal) renderPlayer(player2, Images::Player_02, Images::Player_02_Mask);
+    if (gameMode == GameMode::Hard) renderPlayer(player2, Images::Player_02, Images::Player_02_Mask);
 
     if (!player1.getRunning() && !player2.getRunning()) {
 
@@ -152,10 +165,9 @@ void playGame(void) {
         if (numberOfLives == 0) {
 
             Sprites::drawExternalMask(34, 24, Images::GameOver, Images::GameOver_Mask, 0, 0);
-            // player1.setRunning(false, XPosition::Centre);
-            // player2.setRunning(false, XPosition::Centre);
             gameOver = true;
-            EEPROM_Utils::saveScore(score);
+            EEPROM_Utils::saveScore(gameMode, score);
+            renderScoreBoards(score, numberOfLives);
 
         }
         else {
