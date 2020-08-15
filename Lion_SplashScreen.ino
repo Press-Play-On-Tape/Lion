@@ -25,7 +25,7 @@ void splashScreen() {
 
     if (justPressed > 0 && counter == 0) {
 
-        #ifdef PLAY_SOUNDS    
+        #ifdef SOUNDS    
         sound.tone(NOTE_A2, 45);
         sound.tone(NOTE_F1, 45);
         #endif
