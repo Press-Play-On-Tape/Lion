@@ -7,6 +7,7 @@
 #define _THREE_IMAGES
 #define SHOW_INSTUCTIONS
 #define SHOW_ROAR
+#define RESET
 
 struct SoundVars {
 

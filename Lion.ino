@@ -1,10 +1,11 @@
 #include "src/utils/Arduboy2Ext.h"
-#include <ArduboyTones.h>
 #include "src/images/Images.h"
 #include "src/utils/Consts.h"
 #include "src/utils/EEPROM_Utils.h"
 #include "src/entities/Entities.h"
 #include "src/sounds/Sounds.h"
+#include "src/ArduboyNewTones/ArduboyNewTones.h"
+#include "src/ArduboyNewTones/ArduboyNewTonesPitches.h"
 
 Arduboy2Ext arduboy;
 
@@ -42,13 +43,13 @@ uint16_t score = 0;
 uint8_t numberOfLives = 3;
 uint8_t ledDelay = 0;
 uint8_t marqueeCounter = 0;
+uint8_t resetCounter = 0;
 
 bool gameOver = false;
 
 #ifdef SOUNDS
     uint8_t soundCounter = 0;
     bool sounds = arduboy.audio.enabled();
-    BeepPin2 beep;
 #endif
 
 void setup(void) {
@@ -65,11 +66,7 @@ void setup(void) {
 	arduboy.setFrameRate(40);
     arduboy.setRGBled(0, 0, 0);
 
-    #ifdef SOUNDS
-        beep.begin();
-    #endif
-
-    EEPROM_Utils::initEEPROM();
+    EEPROM_Utils::initEEPROM(false);
 	
 }
 

@@ -1,5 +1,7 @@
 #pragma once
 
+#include "../ArduboyNewTones/ArduboyNewTonesPitches.h"
+
 namespace Sounds {
 
     const uint16_t Title[] PROGMEM = {

@@ -15,7 +15,7 @@ class EEPROM_Utils {
 
     EEPROM_Utils(){};
         
-    static void initEEPROM();
+    static void initEEPROM(bool force);
     static uint16_t getScore(GameMode mode);
     static void saveScore(GameMode mode, uint16_t score);
     static bool toggleSoundSettings(Arduboy2Ext &arduboy);
@@ -34,12 +34,12 @@ class EEPROM_Utils {
 const uint8_t letter1 = 'L'; 
 const uint8_t letter2 = 'T'; 
 
-void EEPROM_Utils::initEEPROM() {
+void EEPROM_Utils::initEEPROM(bool force) {
 
     byte c1 = EEPROM.read(EEPROM_START_C1);
     byte c2 = EEPROM.read(EEPROM_START_C2);
 
-    if (c1 != letter1 || c2 != letter2) { 
+    if (c1 != letter1 || c2 != letter2 || force) { 
 
         uint16_t score = 0;
 

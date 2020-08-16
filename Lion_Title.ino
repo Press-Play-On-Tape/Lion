@@ -69,6 +69,29 @@ void title() {
         }
     #endif
 
+    #ifdef RESET
+        if (arduboy.pressed(LEFT_BUTTON) && arduboy.pressed(RIGHT_BUTTON)) {
+
+            resetCounter++;
+            arduboy.setRGBled(BLUE_LED, resetCounter);
+
+            if (resetCounter == 128) {
+                EEPROM_Utils::initEEPROM(true);
+                arduboy.setRGBled(RED_LED, resetCounter);
+                resetCounter = 0;
+
+            }
+            
+        }
+        else {
+
+            resetCounter = 0;
+            arduboy.setRGBled(RED_LED, 0);
+            arduboy.setRGBled(BLUE_LED, 0);
+
+        }
+    #endif
+
     #ifdef SHOW_ROAR
 
         switch (counter) {
@@ -86,27 +109,17 @@ void title() {
                 drawElements(true, 1);
                 break;
 
-            case 11 ... 61:
+            case 11:
 
                 #ifdef SOUNDS
-                    makeRoar();
+                    sound.tone(NOTE_ROAR, 750);
                 #endif
 
                 drawElements(false, 1);
                 Sprites::drawOverwrite(52 + ((counter % 3) - 1), 6 + ((counter % 3) - 1), Images::Roar, 0);
                 break;
 
-            case 62:
-
-                #ifdef SOUNDS
-                    beep.noTone();
-                #endif
-
-                drawElements(false, 1);
-                Sprites::drawOverwrite(52 + ((counter % 3) - 1), 6 + ((counter % 3) - 1), Images::Roar, 0);
-                break;
-
-            case 63 ... 120:
+            case 12 ... 120:
                 drawElements(false, 1);
                 Sprites::drawOverwrite(52 + ((counter % 3) - 1), 6 + ((counter % 3) - 1), Images::Roar, 0);
                 break;
@@ -244,38 +257,3 @@ void drawElements(bool title, uint8_t lionFrame) {
     Sprites::drawOverwrite(0, 32, Images::Title_Lion_Bottom, lionFrame);
 
 }
-
-#ifdef SHOW_ROAR
-#ifdef SOUNDS
-
-    void makeRoar() {
-
-        beep.tone(soundVars.note, 5);
-        //delay(soundVars.duration);
-        //beep.noTone();
-        //delay(soundVars.duration/3);
-
-        soundVars.note += soundVars.delta;
-
-        if (soundVars.note == soundVars.minimum) {
-
-            soundVars.delta = -soundVars.delta; 
-            soundVars.duration = 44; 
-            soundVars.up = true; 
-            soundVars.down = false;
-        }
-        else if (soundVars.note == soundVars.maximum) {
-            
-            soundVars.delta = -soundVars.delta; 
-            soundVars.down = true; 
-            soundVars.up = false;
-            
-        }
-
-        if (soundVars.up) soundVars.duration -= 2;
-        else if (soundVars.down) soundVars.duration += 2;
-
-    }
-
-#endif
-#endif

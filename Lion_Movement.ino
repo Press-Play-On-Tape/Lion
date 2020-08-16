@@ -71,7 +71,17 @@ void moveLion(Lion &thisLion, Lion &otherLion) {
                     }
                     else {
 
-                        thisLion.decXPosition();
+                        if (otherLion.getXPosition() > XPosition::LH_Attack) {
+
+                            thisLion.decXPosition();
+
+                        }
+                        else {
+
+                            thisLion.incXPosition();
+                            thisLion.setDirection(Direction::Right);
+
+                        }
 
                     }
 
@@ -79,7 +89,7 @@ void moveLion(Lion &thisLion, Lion &otherLion) {
 
                 case XPosition::LH_Attack: 
 
-                    if (player1.getYPosition() == thisLion.getYPosition() && random(0, 2) == 0 && otherLion.getXPosition() > XPosition::LH_Attack) {
+                    if (player1.getYPosition() == thisLion.getYPosition() && random(0, 2) == 0) {
 
                         thisLion.incXPosition();
                         thisLion.setDirection(Direction::Right);
@@ -195,8 +205,6 @@ void moveLion(Lion &thisLion, Lion &otherLion) {
 
                             if (player2.getYPosition() == thisLion.getYPosition()) {
 
-                                
-
                                 if (otherLion.getXPosition() <= XPosition::Centre && !otherLion.isMovingUpDown() && rnd) {
 
                                     changeLevel(thisLion, otherLion, Direction::Left);
@@ -217,7 +225,17 @@ void moveLion(Lion &thisLion, Lion &otherLion) {
                             }
                             else {
 
-                                thisLion.incXPosition();
+                                if (otherLion.getXPosition() < XPosition::RH_Attack) {
+
+                                    thisLion.incXPosition();
+
+                                }
+                                else {
+
+                                    thisLion.decXPosition();
+                                    thisLion.setDirection(Direction::Left);
+
+                                }
 
                             }
 
