@@ -64,8 +64,7 @@ void moveLion(Lion &thisLion, Lion &otherLion) {
                         else {
 
                             thisLion.decXPosition();
-                            increaseScore();
-
+                            
                         }
 
                     }
@@ -89,10 +88,11 @@ void moveLion(Lion &thisLion, Lion &otherLion) {
 
                 case XPosition::LH_Attack: 
 
-                    if (player1.getYPosition() == thisLion.getYPosition() && random(0, 2) == 0) {
+                    if (player1.getYPosition() == thisLion.getYPosition() && (score < 50 || random(0, 2) == 0)) {
 
                         thisLion.incXPosition();
                         thisLion.setDirection(Direction::Right);
+                        increaseScore();
 
                     }
                     else {
@@ -109,7 +109,7 @@ void moveLion(Lion &thisLion, Lion &otherLion) {
 
                         thisLion.incXPosition();
                         thisLion.setDirection(Direction::Right);
-
+                        increaseScore();
                         
                     }
                     else {
@@ -218,7 +218,6 @@ void moveLion(Lion &thisLion, Lion &otherLion) {
                                 else {
 
                                     thisLion.incXPosition();
-                                    increaseScore();
 
                                 }
 
@@ -267,10 +266,11 @@ void moveLion(Lion &thisLion, Lion &otherLion) {
 
                 case XPosition::RH_Attack: 
 
-                    if (player2.getYPosition() == thisLion.getYPosition() && random(0, 2) == 0 && otherLion.getXPosition() < XPosition::RH_Attack) {
+                    if (player2.getYPosition() == thisLion.getYPosition() && (score < 50 || random(0, 2) == 0)) {
 
                         thisLion.decXPosition();
                         thisLion.setDirection(Direction::Left);
+                        increaseScore();
 
                     }
                     else {
@@ -287,6 +287,7 @@ void moveLion(Lion &thisLion, Lion &otherLion) {
 
                         thisLion.decXPosition();
                         thisLion.setDirection(Direction::Left);
+                        increaseScore();
 
                     }
                     else {
