@@ -16,7 +16,7 @@ void title() {
         if (marqueeCounter == 166) marqueeCounter = 0;
     #endif
 
-    Sprites::drawOverwrite(0, 0, Images::Title_LionTop, 0);
+    Sprites::drawOverwrite(0, 0, Images::Title_LionTop, arduboy.getFrameCount(255) < 16 ? 1 : 0);
 
     if (arduboy.justPressed(A_BUTTON) || arduboy.justPressed(B_BUTTON)) { 
 
@@ -253,7 +253,7 @@ void title() {
 
 void drawElements(bool title, uint8_t lionFrame) {
 
-    if (title) Sprites::drawOverwrite(50, 10, Images::Title, 0);
+    if (title) Sprites::drawOverwrite(43, 10, Images::Title, 0);
     Sprites::drawOverwrite(0, 32, Images::Title_Lion_Bottom, lionFrame);
 
 }
