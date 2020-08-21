@@ -2,6 +2,9 @@
 
 void title() {
 
+    uint8_t justPressed = arduboy.justPressedButtons();
+    uint8_t pressed = arduboy.pressedButtons();
+
     if (counter >= 0) counter++;
 
     #ifdef SOUNDS
@@ -18,9 +21,9 @@ void title() {
 
     Sprites::drawOverwrite(0, 0, Images::Title_LionTop, 0);
 
-    if (arduboy.justPressed(A_BUTTON) || arduboy.justPressed(B_BUTTON)) { 
+    if ((justPressed & A_BUTTON) || (justPressed & B_BUTTON)) { 
 
-        gameMode = arduboy.justPressed(A_BUTTON) ? GameMode::Easy : GameMode::Hard;
+        gameMode = (justPressed & A_BUTTON) ? GameMode::Easy : GameMode::Hard;
 
         #ifdef SHOW_ROAR
             
@@ -61,16 +64,16 @@ void title() {
     }
 
     #ifdef SOUNDS
-        if (arduboy.justPressed(UP_BUTTON) || arduboy.justPressed(DOWN_BUTTON)) {
+        if (counter == -1 && (justPressed & UP_BUTTON) || (justPressed & DOWN_BUTTON)) {
 
             sounds = EEPROM_Utils::toggleSoundSettings(arduboy);
-            soundCounter = 16;
+            soundCounter = 64;
             
         }
     #endif
 
     #ifdef RESET
-        if (arduboy.pressed(LEFT_BUTTON) && arduboy.pressed(RIGHT_BUTTON)) {
+        if (counter == -1 && (pressed & LEFT_BUTTON) && (pressed & RIGHT_BUTTON)) {
 
             resetCounter++;
             arduboy.setRGBled(BLUE_LED, resetCounter);
@@ -129,12 +132,20 @@ void title() {
                 break;
 
             case 131:
-                drawElements(true, 0);
-                #ifdef SHOW_INSTUCTIONS
-                    gameState = GameState::Instructions_Init;
-                #else
-                    gameState = GameState::PlayGame_Init;
-                #endif
+                drawElements(false, 0);
+
+                if ((pressed & UP_BUTTON) || (pressed & DOWN_BUTTON) || (pressed & LEFT_BUTTON) || (pressed & RIGHT_BUTTON)) {
+
+                    counter = 0;
+
+                }
+                else {
+                    #ifdef SHOW_INSTUCTIONS
+                        gameState = GameState::Instructions_Init;
+                    #else
+                        gameState = GameState::PlayGame_Init;
+                    #endif
+                }
                 break;
 
         }

@@ -474,7 +474,7 @@ void die() {
     #ifdef SOUNDS
     sound.tones(Sounds::LionEscaped);
     #endif
-    arduboy.setRGBled(GREEN_LED, Constants::LED_Brightness);
+    arduboy.setRGBled(RED_LED, Constants::LED_Brightness);
     ledDelay = Constants::Led_Delay;
     numberOfLives--;
 
