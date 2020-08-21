@@ -88,7 +88,7 @@ void moveLion(Lion &thisLion, Lion &otherLion) {
 
                 case XPosition::LH_Attack: 
 
-                    if (player1.getYPosition() == thisLion.getYPosition() && (score < 50 || random(0, 2) == 0)) {
+                    if (player1.getYPosition() == thisLion.getYPosition() && (score < 100 || random(0, 2) == 0)) {
 
                         thisLion.incXPosition();
                         thisLion.setDirection(Direction::Right);
@@ -266,7 +266,7 @@ void moveLion(Lion &thisLion, Lion &otherLion) {
 
                 case XPosition::RH_Attack: 
 
-                    if (player2.getYPosition() == thisLion.getYPosition() && (score < 50 || random(0, 2) == 0)) {
+                    if (player2.getYPosition() == thisLion.getYPosition() && (score < 100 || random(0, 2) == 0)) {
 
                         thisLion.decXPosition();
                         thisLion.setDirection(Direction::Left);
