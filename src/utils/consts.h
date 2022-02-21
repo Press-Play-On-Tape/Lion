@@ -182,6 +182,6 @@ namespace Constants {
 
     constexpr uint8_t Led_Delay = 8;
     constexpr uint8_t Particle_Count = 50;
-    constexpr uint8_t LED_Brightness = 8;
+    constexpr uint8_t LED_Brightness = 4;
  
 }
